@@ -1,42 +1,39 @@
-
-
-// ignore_for_file: file_names
 import 'package:flutter/material.dart';
-import 'package:subs_vendor/screens/CommonScreens.dart/AlertsScreen.dart';
-import 'package:subs_vendor/screens/CommonScreens.dart/ProfileScreen.dart';
-import 'package:subs_vendor/screens/CustomerScreens/AddSubScreen.dart';
-import 'package:subs_vendor/screens/CustomerScreens/MySubscriptionsScreen.dart';
-import 'package:subs_vendor/screens/CustomerScreens/SubSuccessScreen.dart';
-import 'package:subs_vendor/screens/OnboardingScreens/BankDetailsScreen.dart';
-import 'package:subs_vendor/screens/BlankTargetScreen.dart';
-import 'package:subs_vendor/screens/OnboardingScreens/ChooseTypeScreen.dart';
-import 'package:subs_vendor/screens/CustomerScreens/CustomSubscription.dart';
-import 'package:subs_vendor/screens/CustomerScreens/HomeScreen.dart';
-import 'package:subs_vendor/screens/CommonScreens.dart/SettingsScreen.dart';
-import 'package:subs_vendor/screens/OnboardingScreens/ResetPasswordScreen.dart';
-import 'package:subs_vendor/screens/OnboardingScreens/SignUpOtpScreen.dart';
-import 'package:subs_vendor/screens/OnboardingScreens/LoginScreen.dart';
-import 'package:subs_vendor/screens/VendorScreens/MyCustomers.dart';
-import 'package:subs_vendor/screens/OnboardingScreens/OTPcontrollerScreen.dart';
-import 'package:subs_vendor/screens/VendorScreens/OverviewScreen.dart';
-import 'package:subs_vendor/screens/OnboardingScreens/WelcomeScreen.dart';
-import 'package:subs_vendor/screens/OnboardingScreens/UserInfoScreen.dart';
+import '../screens/CommonScreens.dart/AlertsScreen.dart';
+import '../screens/CommonScreens.dart/ProfileScreen.dart';
+import '../screens/CustomerScreens/MySubscriptionsScreen.dart';
+import '../screens/CustomerScreens/SubSuccessScreen.dart';
+import '../screens/OnboardingScreens/BankDetailsScreen.dart';
+import '../screens/BlankTargetScreen.dart';
+import '../screens/OnboardingScreens/ChooseTypeScreen.dart';
+import '../screens/CustomerScreens/CustomSubscription.dart';
+import '../screens/CustomerScreens/HomeScreen.dart';
+import '../screens/CommonScreens.dart/SettingsScreen.dart';
+import '../screens/OnboardingScreens/SignUpOtpScreen.dart';
+import '../screens/OnboardingScreens/LoginScreen.dart';
+import '../screens/VendorScreens/MyCustomers.dart';
+import '../screens/OnboardingScreens/OTPcontrollerScreen.dart';
+import '../screens/VendorScreens/OverviewScreen.dart';
+import '../screens/OnboardingScreens/WelcomeScreen.dart';
+import '../screens/OnboardingScreens/UserInfoScreen.dart';
 
 final Map<String, WidgetBuilder> routes = {
-  WelcomeScreen.routeName: (context) => WelcomeScreen(),
-  LoginScreen.routeName: (context) => LoginScreen(),
-  HomeScreen.routeName: (context) => HomeScreen(),
-  ProfilePage.routeName: (context) => ProfilePage(),
-  BankDetailScreen.routeName: (context) => BankDetailScreen(),
-  MyCustomerScreen.routeName:(context) => MyCustomerScreen(),
-  SignUpOtpScreen.routeName:(context) => SignUpOtpScreen(),
-  AlertsScreen.routeName: (context) => AlertsScreen(),
-  SettingsScreen.routeName: (context) => SettingsScreen(),
+  WelcomeScreen.routeName: (context) => const WelcomeScreen(),
+  LoginScreen.routeName: (context) => const LoginScreen(),
+  HomeScreen.routeName: (context) => const HomeScreen(),
+  ProfilePage.routeName: (context) => const ProfilePage(),
+  BankDetailScreen.routeName: (context) => const BankDetailScreen(),
+  MyCustomerScreen.routeName: (context) => const MyCustomerScreen(),
+  SignUpOtpScreen.routeName: (context) => SignUpOtpScreen(
+        type: ModalRoute.of(context)!.settings.arguments as OTPScreenType,
+      ),
+  AlertsScreen.routeName: (context) => const AlertsScreen(),
+  SettingsScreen.routeName: (context) => const SettingsScreen(),
   CustomSubScreen.routeName: (context) => CustomSubScreen(),
-  ChooseTypeScreen.routeName: (context) => ChooseTypeScreen(),
-  OverviewScreen.routeName: (context) => OverviewScreen(),
-  SubSuccess.routeName: (context) => SubSuccess(),
-  MySubScreen.routeName: (context) => MySubScreen(),
-  DisplayProfile.routeName:(context) => DisplayProfile(),
-  blank.routeName: (context) => blank(),
+  ChooseTypeScreen.routeName: (context) => const ChooseTypeScreen(),
+  OverviewScreen.routeName: (context) => const OverviewScreen(),
+  SubSuccess.routeName: (context) => const SubSuccess(),
+  MySubScreen.routeName: (context) => const MySubScreen(),
+  DisplayProfile.routeName: (context) => const DisplayProfile(),
+  blank.routeName: (context) => const blank(),
 };

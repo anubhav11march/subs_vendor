@@ -6,7 +6,11 @@ import 'package:subs_vendor/Utils/Constants.dart';
 import 'package:subs_vendor/screens/OnboardingScreens/OTPcontrollerScreen.dart';
 
 class SignUpOtpScreen extends StatefulWidget {
-  const SignUpOtpScreen({Key? key}) : super(key: key);
+  final OTPScreenType type;
+  const SignUpOtpScreen({
+    required this.type,
+    Key? key,
+  }) : super(key: key);
   static String routeName = '/loginOTP';
 
   @override
@@ -14,22 +18,27 @@ class SignUpOtpScreen extends StatefulWidget {
 }
 
 class _SignUpOtpScreenState extends State<SignUpOtpScreen> {
-  String dialCodeDigits = '+91';
-  TextEditingController _controller = TextEditingController();
+  final dialCodeDigits = ValueNotifier<String>('+91');
+  final TextEditingController _controller = TextEditingController();
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    dialCodeDigits.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
-    double height, width;
-height = MediaQuery.of(context).size.height;
-width = MediaQuery.of(context).size.width;
+    final height = MediaQuery.of(context).size.height;
+    final width = MediaQuery.of(context).size.width;
     return Scaffold(
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            SizedBox(
-              height: height*0.13,
-            ),
+            SizedBox(height: height * 0.13),
             Container(
                 margin: EdgeInsets.all(10),
                 child: Center(
@@ -37,26 +46,21 @@ width = MediaQuery.of(context).size.width;
                       style:
                           TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
                 )),
-            SizedBox(
-              height: height*0.065,
-            ),
+            SizedBox(height: height * 0.065),
             SizedBox(
               width: width,
-              height: height*0.08,
+              height: height * 0.08,
               child: CountryCodePicker(
-                onChanged: (country) {
-                  setState(() {
-                    dialCodeDigits = country.dialCode!;
-                  });
-                },
+                onChanged: (country) =>
+                    dialCodeDigits.value = country.dialCode!,
                 initialSelection: 'IN',
                 showCountryOnly: false,
                 showOnlyCountryWhenClosed: false,
-                favorite: ["+91", "IN"],
+                favorite: const ["+91", "IN"],
               ),
             ),
             Container(
-              height: height*0.1,
+              height: height * 0.1,
               margin: EdgeInsets.only(left: 15, right: 15),
               child: TextField(
                 showCursor: true,
@@ -93,7 +97,9 @@ width = MediaQuery.of(context).size.width;
                     hintText: "Phone Number",
                     prefix: Padding(
                       padding: EdgeInsets.all(4),
-                      child: Text(dialCodeDigits),
+                      child: ValueListenableBuilder<String>(
+                          valueListenable: dialCodeDigits,
+                          builder: (context, value, child) => Text(value)),
                     )),
                 maxLength: 10,
                 keyboardType: TextInputType.number,
@@ -102,7 +108,7 @@ width = MediaQuery.of(context).size.width;
             ),
             Container(
               margin: EdgeInsets.all(15),
-              height: height*0.065,
+              height: height * 0.065,
               width: double.infinity,
               child: ElevatedButton(
                   style: ButtonStyle(
@@ -113,12 +119,15 @@ width = MediaQuery.of(context).size.width;
                           borderRadius: BorderRadius.circular(10.0),
                         ),
                       )),
-                  onPressed: () {
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (c) => OtpControllerScreen(
+                  onPressed: () => Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (c) => OtpControllerScreen(
                             phone: _controller.text,
-                            codeDigits: dialCodeDigits)));
-                  },
+                            codeDigits: dialCodeDigits.value,
+                            type: widget.type,
+                          ),
+                        ),
+                      ),
                   child: Text(
                     "Next",
                     style: TextStyle(color: Colors.white, fontSize: 18),

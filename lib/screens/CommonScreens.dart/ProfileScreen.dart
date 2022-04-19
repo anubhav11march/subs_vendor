@@ -1,21 +1,14 @@
-// ignore_for_file: file_names, prefer_const_literals_to_create_immutables, prefer_const_constructors
+// import 'dart:math';
 
-import 'dart:io';
 import 'dart:math';
 
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:subs_vendor/Models/UserSubscriptionModel.dart';
 import 'package:subs_vendor/Utils/Constants.dart';
 import 'package:subs_vendor/api/GetUserDetail.dart';
-import 'package:subs_vendor/api/UpdateProfileApi.dart';
 import 'package:subs_vendor/screens/CommonScreens.dart/EditProfilePage.dart';
-import 'package:subs_vendor/screens/CustomerScreens/HomeScreen.dart';
 import 'package:subs_vendor/shared_preferences/token_profile.dart';
 import 'package:subs_vendor/shared_preferences/type_preference.dart';
-import 'package:subs_vendor/widgets/ScreenSizeButton.dart';
 
 class DisplayProfile extends StatefulWidget {
   static String routeName = "/editInfo";
@@ -35,12 +28,14 @@ class _DisplayProfileState extends State<DisplayProfile> {
   final shopController = TextEditingController();
   final emailController = TextEditingController();
   final addressController = TextEditingController();
-  final pincodeController = TextEditingController();
+  final pinCodeController = TextEditingController();
   final descriptionController = TextEditingController();
+  late final int picIndex;
 
   @override
   void initState() {
     // TODO: implement initState
+    picIndex = Random().nextInt(Images.length);
     super.initState();
     typePreference = TypePreference();
     getProfile();
@@ -54,25 +49,15 @@ class _DisplayProfileState extends State<DisplayProfile> {
   }
 
   getProfile() async {
-    var mapOfSubs = null;
-    mapOfSubs = await getUser(
+    final mapOfSubs = await getUser(
       tokenProfile?.token,
     );
     print('In profile list');
-    //print(mapOfSubs.data.toString());
-    // final id = mapOfSubs.data.map((e) {
-    //   print(e.id);
-    //   return e.id;
-    // });
     print(mapOfSubs);
-    // final model = mapOfSubs.data.map((e) => Vendor.fromMap(e.da));
-    //final model = Vendor.fromMap(mapOfSubs.data[0]);
-    //print(model.toString());
-    //print(id);
-    nameController.text = mapOfSubs['data']['name'];
-    emailController.text = mapOfSubs['data']['email'];
-    addressController.text = mapOfSubs['data']['address'];
-    pincodeController.text = mapOfSubs['data']['pincode'];
+    nameController.text = mapOfSubs['data']['name'] ?? "";
+    emailController.text = mapOfSubs['data']['email'] ?? "";
+    addressController.text = mapOfSubs['data']['address'] ?? "";
+    pinCodeController.text = mapOfSubs['data']['pincode'] ?? "";
     if (ConstantType == true) {
       shopController.text = mapOfSubs['data']['shopname'];
       descriptionController.text = mapOfSubs['data']['name'];
@@ -85,13 +70,22 @@ class _DisplayProfileState extends State<DisplayProfile> {
   }
 
   @override
+  void dispose() {
+    nameController.dispose();
+    shopController.dispose();
+    emailController.dispose();
+    addressController.dispose();
+    pinCodeController.dispose();
+    descriptionController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    double height, width;
-    height = MediaQuery.of(context).size.height;
-    width = MediaQuery.of(context).size.width;
-    double defaultFontSize = 14;
-    double ContainerSize = height * 0.221;
-    double picSize = height * 0.08;
+    final height = MediaQuery.of(context).size.height;
+    const defaultFontSize = 14.0;
+    final containerSize = height * 0.221;
+    final picSize = height * 0.08;
     return Form(
       key: _form,
       child: Scaffold(
@@ -107,24 +101,24 @@ class _DisplayProfileState extends State<DisplayProfile> {
                     children: [
                       Container(
                         width: double.infinity,
-                        height: ContainerSize,
-                        decoration: BoxDecoration(
+                        height: containerSize,
+                        decoration: const BoxDecoration(
                           color: AppColors.primaryGrey,
                           borderRadius: BorderRadiusDirectional.only(
                               bottomEnd: Radius.circular(30),
                               bottomStart: Radius.circular(30)),
                         ),
                       ),
-                      Text(
+                      const Text(
                         "User Info",
                         style: TextStyle(fontSize: 18),
                       ),
                       Positioned(
-                          top: ContainerSize - picSize,
+                          top: containerSize - picSize,
                           child: Container(
                             child: ClipOval(
                               child: Image.asset(
-                                Images[Random().nextInt(Images.length)],
+                                Images[picIndex],
                                 height: picSize * 2,
                                 width: picSize * 2,
                                 fit: BoxFit.cover,
@@ -145,17 +139,17 @@ class _DisplayProfileState extends State<DisplayProfile> {
                   ),
                   ListView(
                       shrinkWrap: true,
-                      physics: NeverScrollableScrollPhysics(),
-                      padding: EdgeInsets.all(10),
+                      physics: const NeverScrollableScrollPhysics(),
+                      padding: const EdgeInsets.all(10),
                       children: [
-                        Align(
+                        const Align(
                             alignment: Alignment.centerLeft,
                             child: Text("Name",
                                 style: TextStyle(color: AppColors.iconGrey))),
                         SizedBox(
                           height: height * 0.013,
                         ),
-                        Container(
+                        SizedBox(
                           height: height * 0.065,
                           child: TextFormField(
                             showCursor: true,
@@ -167,23 +161,23 @@ class _DisplayProfileState extends State<DisplayProfile> {
                                 borderRadius: BorderRadius.circular(15),
                               ),
                               enabledBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
+                                  borderSide: const BorderSide(
                                       color: AppColors.tileSelectGreen),
                                   borderRadius: BorderRadius.circular(15)),
                               focusedBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
+                                  borderSide: const BorderSide(
                                       color: AppColors.tileSelectGreen),
                                   borderRadius: BorderRadius.circular(15)),
                               errorBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
+                                  borderSide: const BorderSide(
                                       color: AppColors.tileSelectGreen),
                                   borderRadius: BorderRadius.circular(15)),
                               focusedErrorBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
+                                  borderSide: const BorderSide(
                                       color: AppColors.tileSelectGreen),
                                   borderRadius: BorderRadius.circular(15)),
                               disabledBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
+                                  borderSide: const BorderSide(
                                       color: AppColors.tileSelectGreen),
                                   borderRadius: BorderRadius.circular(15)),
                               filled: true,
@@ -200,14 +194,14 @@ class _DisplayProfileState extends State<DisplayProfile> {
                         SizedBox(
                           height: height * 0.013,
                         ),
-                        Align(
+                        const Align(
                             alignment: Alignment.centerLeft,
                             child: Text("Email-ID",
                                 style: TextStyle(color: AppColors.iconGrey))),
                         SizedBox(
                           height: height * 0.013,
                         ),
-                        Container(
+                        SizedBox(
                           height: height * 0.065,
                           child: TextFormField(
                             showCursor: true,
@@ -219,24 +213,24 @@ class _DisplayProfileState extends State<DisplayProfile> {
                                 borderRadius: BorderRadius.circular(15),
                               ),
                               enabledBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
+                                  borderSide: const BorderSide(
                                       color: AppColors.tileSelectGreen),
                                   borderRadius: BorderRadius.circular(15)),
                               focusedBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
+                                  borderSide: const BorderSide(
                                       color: AppColors.tileSelectGreen),
                                   borderRadius: BorderRadius.circular(15)),
                               errorStyle: const TextStyle(fontSize: 0.01),
                               errorBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
+                                  borderSide: const BorderSide(
                                       color: AppColors.tileSelectGreen),
                                   borderRadius: BorderRadius.circular(15)),
                               focusedErrorBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
+                                  borderSide: const BorderSide(
                                       color: AppColors.tileSelectGreen),
                                   borderRadius: BorderRadius.circular(15)),
                               disabledBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
+                                  borderSide: const BorderSide(
                                       color: AppColors.tileSelectGreen),
                                   borderRadius: BorderRadius.circular(15)),
                               filled: true,
@@ -269,9 +263,9 @@ class _DisplayProfileState extends State<DisplayProfile> {
                         ConstantType == true
                             ? ListView(
                                 shrinkWrap: true,
-                                physics: NeverScrollableScrollPhysics(),
+                                physics: const NeverScrollableScrollPhysics(),
                                 children: [
-                                    InsertText(
+                                    insertText(
                                         "Shop Name",
                                         "Enter your Shop Name",
                                         shopController,
@@ -285,11 +279,11 @@ class _DisplayProfileState extends State<DisplayProfile> {
                                         descriptionController,
                                         height),
                                   ])
-                            : SizedBox(),
+                            : const SizedBox(),
                         SizedBox(
                           height: height * 0.013,
                         ),
-                        Align(
+                        const Align(
                             alignment: Alignment.centerLeft,
                             child: Text(
                               "Address",
@@ -298,12 +292,12 @@ class _DisplayProfileState extends State<DisplayProfile> {
                         SizedBox(
                           height: height * 0.013,
                         ),
-                        Container(
+                        SizedBox(
                           height: height * 0.1,
                           child: TextFormField(
                             showCursor: true,
                             inputFormatters: [
-                              new LengthLimitingTextInputFormatter(36),
+                              LengthLimitingTextInputFormatter(36),
 
                               /// here char limit is 5
                             ],
@@ -316,23 +310,23 @@ class _DisplayProfileState extends State<DisplayProfile> {
                                 borderRadius: BorderRadius.circular(15),
                               ),
                               enabledBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
+                                  borderSide: const BorderSide(
                                       color: AppColors.tileSelectGreen),
                                   borderRadius: BorderRadius.circular(15)),
                               focusedBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
+                                  borderSide: const BorderSide(
                                       color: AppColors.tileSelectGreen),
                                   borderRadius: BorderRadius.circular(15)),
                               errorBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
+                                  borderSide: const BorderSide(
                                       color: AppColors.tileSelectGreen),
                                   borderRadius: BorderRadius.circular(15)),
                               focusedErrorBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
+                                  borderSide: const BorderSide(
                                       color: AppColors.tileSelectGreen),
                                   borderRadius: BorderRadius.circular(15)),
                               disabledBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
+                                  borderSide: const BorderSide(
                                       color: AppColors.tileSelectGreen),
                                   borderRadius: BorderRadius.circular(15)),
                               filled: true,
@@ -349,7 +343,7 @@ class _DisplayProfileState extends State<DisplayProfile> {
                         SizedBox(
                           height: height * 0.013,
                         ),
-                        Align(
+                        const Align(
                             alignment: Alignment.centerLeft,
                             child: Text(
                               "Pincode",
@@ -358,7 +352,7 @@ class _DisplayProfileState extends State<DisplayProfile> {
                         SizedBox(
                           height: height * 0.013,
                         ),
-                        Container(
+                        SizedBox(
                           height: height * 0.065,
                           child: TextFormField(
                             showCursor: true,
@@ -370,24 +364,24 @@ class _DisplayProfileState extends State<DisplayProfile> {
                                 borderRadius: BorderRadius.circular(15),
                               ),
                               enabledBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
+                                  borderSide: const BorderSide(
                                       color: AppColors.tileSelectGreen),
                                   borderRadius: BorderRadius.circular(15)),
                               focusedBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
+                                  borderSide: const BorderSide(
                                       color: AppColors.tileSelectGreen),
                                   borderRadius: BorderRadius.circular(15)),
                               errorStyle: const TextStyle(fontSize: 0.01),
                               errorBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
+                                  borderSide: const BorderSide(
                                       color: AppColors.tileSelectGreen),
                                   borderRadius: BorderRadius.circular(15)),
                               focusedErrorBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
+                                  borderSide: const BorderSide(
                                       color: AppColors.tileSelectGreen),
                                   borderRadius: BorderRadius.circular(15)),
                               disabledBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
+                                  borderSide: const BorderSide(
                                       color: AppColors.tileSelectGreen),
                                   borderRadius: BorderRadius.circular(15)),
                               filled: true,
@@ -397,20 +391,14 @@ class _DisplayProfileState extends State<DisplayProfile> {
                                   fontSize: defaultFontSize),
                               hintText: "Enter your pincode",
                             ),
-                            controller: pincodeController,
+                            controller: pinCodeController,
                             keyboardType: TextInputType.number,
-                            validator: (value) {
-                              if (value?.length != 6) {
-                                return 'Empty';
-                              }
-                              return null;
-                            },
+                            validator: (value) =>
+                                (value?.length != 6) ? 'Empty' : null,
                           ),
                         ),
+                        SizedBox(height: height * 0.065),
                         SizedBox(
-                          height: height * 0.065,
-                        ),
-                        Container(
                           width: double.infinity,
                           height: height * 0.065,
                           child: TextButton(
@@ -419,13 +407,12 @@ class _DisplayProfileState extends State<DisplayProfile> {
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) => EditProfile(
-                                              name: nameController.text,
-                                              address: addressController.text,
-                                              email: emailController.text,
-                                              pincode: pincodeController.text,
-                                              shopname: shopController.text,
-                                              desc:descriptionController.text
-                                            )));
+                                            name: nameController.text,
+                                            address: addressController.text,
+                                            email: emailController.text,
+                                            pincode: pinCodeController.text,
+                                            shopname: shopController.text,
+                                            desc: descriptionController.text)));
                               },
                               style: ButtonStyle(
                                   backgroundColor: MaterialStateProperty.all(
@@ -435,7 +422,7 @@ class _DisplayProfileState extends State<DisplayProfile> {
                                       borderRadius: BorderRadius.circular(10.0),
                                     ),
                                   )),
-                              child: Text(
+                              child: const Text(
                                 'Edit Profile',
                                 style: TextStyle(
                                     color: Colors.white, fontSize: 18),
@@ -444,10 +431,8 @@ class _DisplayProfileState extends State<DisplayProfile> {
                       ])
                 ]);
               } else {
-                return Container(
-                  child: Center(
-                    child: CircularProgressIndicator(),
-                  ),
+                return const Center(
+                  child: CircularProgressIndicator(),
                 );
               }
             }),
@@ -455,22 +440,22 @@ class _DisplayProfileState extends State<DisplayProfile> {
     );
   }
 
-  Widget InsertText(String title, String hint, TextEditingController controller,
+  Widget insertText(String title, String hint, TextEditingController controller,
       double height) {
     return ListView(
       shrinkWrap: true,
-      physics: NeverScrollableScrollPhysics(),
+      physics: const NeverScrollableScrollPhysics(),
       children: [
         Align(
             alignment: Alignment.centerLeft,
             child: Text(
               title,
-              style: TextStyle(color: AppColors.iconGrey),
+              style: const TextStyle(color: AppColors.iconGrey),
             )),
         SizedBox(
           height: height * 0.013,
         ),
-        Container(
+        SizedBox(
           height: height * 0.065,
           child: TextFormField(
             showCursor: true,
@@ -481,23 +466,29 @@ class _DisplayProfileState extends State<DisplayProfile> {
                 borderRadius: BorderRadius.circular(15),
               ),
               enabledBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: AppColors.tileSelectGreen),
+                  borderSide:
+                      const BorderSide(color: AppColors.tileSelectGreen),
                   borderRadius: BorderRadius.circular(15)),
               focusedBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: AppColors.tileSelectGreen),
+                  borderSide:
+                      const BorderSide(color: AppColors.tileSelectGreen),
                   borderRadius: BorderRadius.circular(15)),
               errorBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: AppColors.tileSelectGreen),
+                  borderSide:
+                      const BorderSide(color: AppColors.tileSelectGreen),
                   borderRadius: BorderRadius.circular(15)),
               focusedErrorBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: AppColors.tileSelectGreen),
+                  borderSide:
+                      const BorderSide(color: AppColors.tileSelectGreen),
                   borderRadius: BorderRadius.circular(15)),
               disabledBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: AppColors.tileSelectGreen),
+                  borderSide:
+                      const BorderSide(color: AppColors.tileSelectGreen),
                   borderRadius: BorderRadius.circular(15)),
               filled: true,
               fillColor: Colors.white,
-              hintStyle: TextStyle(color: AppColors.iconGrey, fontSize: 14),
+              hintStyle:
+                  const TextStyle(color: AppColors.iconGrey, fontSize: 14),
               hintText: hint,
             ),
             controller: controller,

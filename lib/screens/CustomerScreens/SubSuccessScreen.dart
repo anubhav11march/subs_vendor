@@ -15,11 +15,10 @@ class SubSuccess extends StatefulWidget {
 
 class _SubSuccessState extends State<SubSuccess> {
   late Timer _timer;
-  _SubSuccessState()
-  {
-    _timer = Timer( const Duration(seconds: 3),(){
+  _SubSuccessState() {
+    _timer = Timer(const Duration(seconds: 3), () {
       setState(() {
-       Navigator.pushNamed(context, HomeScreen.routeName);
+        Navigator.pushNamed(context, HomeScreen.routeName);
       });
     });
   }

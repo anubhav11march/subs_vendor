@@ -5,7 +5,7 @@ import 'package:subs_vendor/Utils/Routes.dart';
 
 import '../Utils/Constants.dart';
 
-Widget ScreenSizeButton(String text,BuildContext context, String Screen ) {
+Widget ScreenSizeButton(String text, BuildContext context, String Screen) {
   return Container(
     width: double.infinity,
     height: 50,

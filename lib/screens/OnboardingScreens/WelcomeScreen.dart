@@ -16,44 +16,45 @@ class WelcomeScreen extends StatefulWidget {
 class _WelcomeScreenState extends State<WelcomeScreen> {
   @override
   Widget build(BuildContext context) {
-   double height, width;
-  height = MediaQuery.of(context).size.height;
-  width = MediaQuery.of(context).size.width;
+    final height = MediaQuery.of(context).size.height;
+    final width = MediaQuery.of(context).size.width;
     return Scaffold(
-      backgroundColor: Colors.white,
-      body: Column(children: [
-
-        Image.asset(
-          'lib/assets/images/welcomeImage__01.jpg',
-          width: width,
-        ),
-        ListView(
-          shrinkWrap: true,
-          physics: NeverScrollableScrollPhysics(),
-          padding: EdgeInsets.all(width*0.025),
-          children:[
-        Align(
+        backgroundColor: Colors.white,
+        body: Column(children: [
+          Image.asset(
+            'lib/assets/images/welcomeImage__01.jpg',
+            width: width,
+          ),
+          ListView(
+              shrinkWrap: true,
+              physics: NeverScrollableScrollPhysics(),
+              padding: EdgeInsets.all(width * 0.025),
+              children: [
+                Align(
                   alignment: Alignment.centerLeft,
-                  child: Text("Welcome to Subscription App!",style: 
-                  TextStyle(
-                    fontSize: 36,
-                    fontWeight: FontWeight.bold
-                  ),),
+                  child: Text(
+                    "Welcome to Subscription App!",
+                    style: TextStyle(fontSize: 36, fontWeight: FontWeight.bold),
+                  ),
                 ),
-                SizedBox(height: height*0.01),
-               Align(
+                SizedBox(height: height * 0.01),
+                Align(
                   alignment: Alignment.centerLeft,
-                  child: Text("Access all your subscription with designated Intervals",style: 
-                  TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w300,
-                    color: AppColors.iconGrey
-                  ),),
-                ), 
-                SizedBox(height: height*0.04), 
-                ScreenSizeButton("Get Started", context, LoginScreen.routeName),
-      ]),
-      ]
-    ));
+                  child: Text(
+                    "Access all your subscription with designated Intervals",
+                    style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w300,
+                        color: AppColors.iconGrey),
+                  ),
+                ),
+                SizedBox(height: height * 0.04),
+                ScreenSizeButton(
+                  "Get Started",
+                  context,
+                  LoginScreen.routeName,
+                ),
+              ]),
+        ]));
   }
 }

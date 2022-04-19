@@ -28,9 +28,9 @@ class TokenPreference {
   cleartTokenPreferenceData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     try {
-        prefs.remove(_USER_DATA);
-    //  return tokenProfile?.token = null;
-      
+      prefs.remove(_USER_DATA);
+      //  return tokenProfile?.token = null;
+
     } catch (e) {
       print('inside userPref clear error: $e');
     }

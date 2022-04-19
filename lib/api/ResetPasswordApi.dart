@@ -18,14 +18,14 @@ class ResetApi {
       'phoneno': phoneno,
       'password': password,
     });
-    var response = await dio.post(
-        'https://nameless-woodland-16457.herokuapp.com/user/resetpassword',
-        data: formData,
-        options: Options(
-            followRedirects: false,
-            validateStatus: (status) {
-              return status! < 500;
-            }));
+    var response =
+        await dio.post('https://subs-app1.herokuapp.com/user/resetpassword',
+            data: formData,
+            options: Options(
+                followRedirects: false,
+                validateStatus: (status) {
+                  return status! < 500;
+                }));
     print("in reset api");
     print(response);
     if (response.statusCode == 200) {

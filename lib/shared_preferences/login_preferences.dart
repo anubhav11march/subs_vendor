@@ -1,9 +1,6 @@
-
-
-
 import 'package:shared_preferences/shared_preferences.dart';
 
-LoginPreference ?loginPreference;
+LoginPreference? loginPreference;
 
 class LoginPreference {
   static const _LOGIN_STATUS = 'LOGINSTATUS';
@@ -11,9 +8,8 @@ class LoginPreference {
   setLoginStatus(bool status) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setBool(_LOGIN_STATUS, status);
-    
   }
-  
+
   Future<bool> getLoginStatus() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     try {
@@ -23,5 +19,4 @@ class LoginPreference {
       return false;
     }
   }
- 
 }

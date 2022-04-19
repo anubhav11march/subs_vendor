@@ -33,15 +33,14 @@ class VendorHomeScreen extends StatefulWidget {
 }
 
 class _VendorHomeScreenState extends State<VendorHomeScreen> {
-  
   @override
   void initState() {
     super.initState();
   }
 
   int _currentIndex = 0;
- 
-final _inactiveColor = Colors.white;
+
+  final _inactiveColor = Colors.white;
   Widget _buildBottomBar() {
     return ClipRRect(
       borderRadius: BorderRadius.all(Radius.circular(15)),
@@ -51,12 +50,11 @@ final _inactiveColor = Colors.white;
         selectedIndex: _currentIndex,
         showElevation: true,
         itemCornerRadius: 50,
-       // curve: Curves.easeIn,
+        // curve: Curves.easeIn,
         onItemSelected: (index) => setState(() => _currentIndex = index),
         items: <BottomNavyBarItem>[
           BottomNavyBarItem(
-            icon: ImageIcon(
-                    AssetImage('lib/assets/images/contacts.png')),
+            icon: ImageIcon(AssetImage('lib/assets/images/contacts.png')),
             title: Text(''),
             activeColor: Color.fromRGBO(255, 255, 255, 0.6),
             inactiveColor: _inactiveColor,
@@ -64,9 +62,8 @@ final _inactiveColor = Colors.white;
           ),
           BottomNavyBarItem(
             icon: ImageIcon(
-                    AssetImage(
-                      'lib/assets/images/tasks.png'),
-                    ),
+              AssetImage('lib/assets/images/tasks.png'),
+            ),
             title: Text(''),
             activeColor: Color.fromRGBO(255, 255, 255, 0.6),
             inactiveColor: _inactiveColor,
@@ -74,9 +71,8 @@ final _inactiveColor = Colors.white;
           ),
           BottomNavyBarItem(
             icon: ImageIcon(
-                    AssetImage(
-                      'lib/assets/images/icon4.png'),
-                    ),
+              AssetImage('lib/assets/images/icon4.png'),
+            ),
             title: Text(''),
             activeColor: Color.fromRGBO(255, 255, 255, 0.6),
             inactiveColor: _inactiveColor,
@@ -93,14 +89,8 @@ final _inactiveColor = Colors.white;
         alignment: Alignment.center,
         child: MyCustomerScreen(),
       ),
-      Container(
-        alignment: Alignment.center,
-        child:OverviewScreen()
-        ),
-      Container(
-        alignment: Alignment.center,
-        child: SettingsScreen()
-      ),
+      Container(alignment: Alignment.center, child: OverviewScreen()),
+      Container(alignment: Alignment.center, child: SettingsScreen()),
     ];
     return IndexedStack(
       index: _currentIndex,
@@ -136,10 +126,8 @@ final _inactiveColor = Colors.white;
         ],
       ),
       body: getBody(),
-      
-    //   body:
+
+      //   body:
     );
   }
 }
-
-

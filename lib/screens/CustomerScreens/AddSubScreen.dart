@@ -95,8 +95,8 @@ class _AddSubScreenState extends State<AddSubScreen> {
   @override
   Widget build(BuildContext context) {
     double height, width;
-height = MediaQuery.of(context).size.height;
-width = MediaQuery.of(context).size.width;
+    height = MediaQuery.of(context).size.height;
+    width = MediaQuery.of(context).size.width;
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -112,14 +112,14 @@ width = MediaQuery.of(context).size.width;
               Icons.arrow_back_ios_new_outlined,
             )),
       ),
-      body: Form (
+      body: Form(
         key: _form,
         child: ListView(
           shrinkWrap: true,
           padding: EdgeInsets.all(15),
           children: [
-             SizedBox(
-              height: height*0.02,
+            SizedBox(
+              height: height * 0.02,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -129,8 +129,8 @@ width = MediaQuery.of(context).size.width;
                   style: TextStyle(color: AppColors.iconGrey, fontSize: 18),
                 ),
                 SizedBox(
-                  width: width*0.425,
-                  height: height*0.065,
+                  width: width * 0.425,
+                  height: height * 0.065,
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Center(
@@ -147,7 +147,7 @@ width = MediaQuery.of(context).size.width;
               ],
             ),
             SizedBox(
-              height: height*0.02,
+              height: height * 0.02,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -157,8 +157,8 @@ width = MediaQuery.of(context).size.width;
                   style: TextStyle(color: AppColors.iconGrey, fontSize: 18),
                 ),
                 SizedBox(
-                  width: width*0.425,
-                  height: height*0.065,
+                  width: width * 0.425,
+                  height: height * 0.065,
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Center(
@@ -174,7 +174,7 @@ width = MediaQuery.of(context).size.width;
                 )
               ],
             ),
-            SizedBox(height: height*0.02),
+            SizedBox(height: height * 0.02),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -183,9 +183,9 @@ width = MediaQuery.of(context).size.width;
                   style: TextStyle(color: AppColors.iconGrey, fontSize: 18),
                 ),
                 CoolDropdown(
-                  dropdownWidth: width*0.375,
-                  resultWidth: width*0.425,
-                  dropdownHeight: height*0.325,
+                  dropdownWidth: width * 0.375,
+                  resultWidth: width * 0.425,
+                  dropdownHeight: height * 0.325,
                   dropdownList: dropdownItemCategoryList,
                   dropdownItemTopGap: 5,
                   dropdownItemBottomGap: 5,
@@ -207,8 +207,8 @@ width = MediaQuery.of(context).size.width;
                   resultMainAxis: MainAxisAlignment.center,
                   gap: 10,
                   resultIcon: Container(
-                      width: width*0.05,
-                      height: height*0.026,
+                      width: width * 0.05,
+                      height: height * 0.026,
                       child: Center(
                         child: Icon(
                           Icons.arrow_drop_down,
@@ -227,7 +227,7 @@ width = MediaQuery.of(context).size.width;
               ],
             ),
             SizedBox(
-              height: height*0.02,
+              height: height * 0.02,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -237,8 +237,8 @@ width = MediaQuery.of(context).size.width;
                   style: TextStyle(color: AppColors.iconGrey, fontSize: 18),
                 ),
                 Container(
-                  width: width*0.425,
-                  height: height*0.065,
+                  width: width * 0.425,
+                  height: height * 0.065,
                   decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.all(Radius.circular(10)),
@@ -266,7 +266,7 @@ width = MediaQuery.of(context).size.width;
               ],
             ),
             SizedBox(
-              height: height*0.02,
+              height: height * 0.02,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -285,8 +285,8 @@ width = MediaQuery.of(context).size.width;
                   ],
                 ),
                 Container(
-                  width: width*0.425,
-                  height: height*0.065,
+                  width: width * 0.425,
+                  height: height * 0.065,
                   decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.all(Radius.circular(10)),
@@ -313,7 +313,7 @@ width = MediaQuery.of(context).size.width;
                 )
               ],
             ),
-            SizedBox(height: height*0.04),
+            SizedBox(height: height * 0.04),
             Text(
               "SI unit :",
               style: TextStyle(color: AppColors.iconGrey, fontSize: 18),
@@ -487,7 +487,7 @@ width = MediaQuery.of(context).size.width;
               ),
             ),
             SizedBox(
-              height: height*0.02,
+              height: height * 0.02,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -513,8 +513,8 @@ width = MediaQuery.of(context).size.width;
                           });
                         },
                         child: Container(
-                          width: width*0.1,
-                          height: height*0.052,
+                          width: width * 0.1,
+                          height: height * 0.052,
                           decoration: ShapeDecoration(
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.all(Radius.circular(
@@ -528,7 +528,7 @@ width = MediaQuery.of(context).size.width;
                           )),
                         )),
                     SizedBox(
-                      width: width*0.0125,
+                      width: width * 0.0125,
                     ),
                     Container(
                       decoration: BoxDecoration(
@@ -550,7 +550,9 @@ width = MediaQuery.of(context).size.width;
                         ),
                       ),
                     ),
-                    SizedBox(width: width*0.0125,),
+                    SizedBox(
+                      width: width * 0.0125,
+                    ),
                     InkWell(
                         onTap: () {
                           setState(() {
@@ -558,8 +560,8 @@ width = MediaQuery.of(context).size.width;
                           });
                         },
                         child: Container(
-                          width: width*0.1,
-                          height: height*0.052,
+                          width: width * 0.1,
+                          height: height * 0.052,
                           decoration: ShapeDecoration(
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.all(Radius.circular(
@@ -576,7 +578,7 @@ width = MediaQuery.of(context).size.width;
                 )
               ],
             ),
-            SizedBox(height: height*0.04),
+            SizedBox(height: height * 0.04),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -585,9 +587,9 @@ width = MediaQuery.of(context).size.width;
                   style: TextStyle(color: AppColors.iconGrey, fontSize: 18),
                 ),
                 CoolDropdown(
-                  dropdownWidth: width*0.375,
-                  resultWidth: width*0.425,
-                  dropdownHeight: height*0.325,
+                  dropdownWidth: width * 0.375,
+                  resultWidth: width * 0.425,
+                  dropdownHeight: height * 0.325,
                   dropdownList: dropdownItemList,
                   dropdownItemTopGap: 5,
                   dropdownItemBottomGap: 5,
@@ -609,8 +611,8 @@ width = MediaQuery.of(context).size.width;
                   resultMainAxis: MainAxisAlignment.center,
                   gap: 10,
                   resultIcon: Container(
-                      width: width*0.05,
-                      height: height*0.026,
+                      width: width * 0.05,
+                      height: height * 0.026,
                       child: Center(
                         child: Icon(
                           Icons.arrow_drop_down,
@@ -629,11 +631,11 @@ width = MediaQuery.of(context).size.width;
               ],
             ),
             SizedBox(
-              height: height*0.04,
+              height: height * 0.04,
             ),
             Container(
               width: width,
-              height: height*0.065,
+              height: height * 0.065,
               child: TextButton(
                   onPressed: () async {
                     print('add custom called');
@@ -648,38 +650,35 @@ width = MediaQuery.of(context).size.width;
                         ),
                       )),
                   child: _isLoading
-                          ? Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                SizedBox(
-                                  height: height*0.04,
-                                  width: width*0.075,
-                                  child: CircularProgressIndicator(
-                                    color: Colors.white,
-                                  ),
-                                ),
-                                SizedBox(
-                                  width: 20,
-                                ),
-                                Text(
-                                  "Please Wait...",
-                                  style: TextStyle(
-                                      color: Colors.white, fontSize: 18),
-                                )
-                              ],
-                            )
-                          : Text(
-                              'Add Subscription',
+                      ? Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            SizedBox(
+                              height: height * 0.04,
+                              width: width * 0.075,
+                              child: CircularProgressIndicator(
+                                color: Colors.white,
+                              ),
+                            ),
+                            SizedBox(
+                              width: 20,
+                            ),
+                            Text(
+                              "Please Wait...",
                               style:
                                   TextStyle(color: Colors.white, fontSize: 18),
                             )
-                            ),
+                          ],
+                        )
+                      : Text(
+                          'Add Subscription',
+                          style: TextStyle(color: Colors.white, fontSize: 18),
+                        )),
             ),
           ],
         ),
       ),
-    );;
+    );
+    ;
   }
 }
-
-   

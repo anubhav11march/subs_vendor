@@ -27,7 +27,7 @@ class MySubScreen extends StatefulWidget {
 }
 
 class _MySubScreenState extends State<MySubScreen> {
-   void initState() {
+  void initState() {
     super.initState();
     fetchCustomers();
   }
@@ -50,61 +50,78 @@ class _MySubScreenState extends State<MySubScreen> {
     //print(id);
     return mapOfSubs!.data;
   }
+
   @override
   Widget build(BuildContext context) {
     double height, width;
-height = MediaQuery.of(context).size.height;
-width = MediaQuery.of(context).size.width;
+    height = MediaQuery.of(context).size.height;
+    width = MediaQuery.of(context).size.width;
     return Scaffold(
       backgroundColor: Colors.white,
-      body: ListView(
-      padding: EdgeInsets.all(height*0.02),
-      children: [
+      body: ListView(padding: EdgeInsets.all(height * 0.02), children: [
         SearchBar(),
-        SizedBox(height:height*0.032),
-        Text("Your Subscriptions",
-        style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold),),
-        SizedBox(height:height*0.013),
+        SizedBox(height: height * 0.032),
+        Text(
+          "Your Subscriptions",
+          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+        ),
+        SizedBox(height: height * 0.013),
         FutureBuilder(
-              future: fetchCustomers(),
-              builder: (context, AsyncSnapshot list) {
-                if (list.data != null) {
-                  return list.data.length == 0? SizedBox(
-                    height: height*0.5,
-                    child: Center(child: Text("No subscriptions found"))):ListView.builder(
-                      shrinkWrap: true,
-                      physics: BouncingScrollPhysics(),
-                      itemCount: list.data.length,
-                      itemBuilder: (context, index) {
-                        return subTile(
-                            list.data[index]['vendor_details'][0]['name'].toString(),
-                            list.data[index]['interval'].toString(),
-                            list.data[index]['productName'].toString(),
-                            list.data[index]['amount'].toString(),
-                            "${list.data[index]['quantity']} Kilo",
-                            ImagesRect[Random().nextInt(ImagesRect.length)],
-                            context,
-                            list.data[index]['_id'].toString(),
-                            list.data[index]['vendor'].toString(),
-                            list.data[index]["status"]?"Your Sub is on HOLD":
-                            list.data[index]['duedate'].toString()
-                            ,height,width);
-                      });
-                } else {
-                  return Container(
-                    child: Center(
-                      child: CircularProgressIndicator(),
-                    ),
-                  );
-                }
-              }),
-              ]
-    ),
+            future: fetchCustomers(),
+            builder: (context, AsyncSnapshot list) {
+              if (list.data != null) {
+                return list.data.length == 0
+                    ? SizedBox(
+                        height: height * 0.5,
+                        child: Center(child: Text("No subscriptions found")))
+                    : ListView.builder(
+                        shrinkWrap: true,
+                        physics: BouncingScrollPhysics(),
+                        itemCount: list.data.length,
+                        itemBuilder: (context, index) {
+                          return subTile(
+                              // (list.data[index]['vendor_details'][0]['name']).toString(),
+                              "",
+                              list.data[index]['interval'].toString(),
+                              list.data[index]['productName'].toString(),
+                              list.data[index]['amount'].toString(),
+                              "${list.data[index]['quantity']} Kilo",
+                              ImagesRect[Random().nextInt(ImagesRect.length)],
+                              context,
+                              list.data[index]['_id'].toString(),
+                              list.data[index]['vendor'].toString(),
+                              list.data[index]["status"]
+                                  ? "Your Sub is on HOLD"
+                                  : list.data[index]['duedate'].toString(),
+                              height,
+                              width);
+                        });
+              } else {
+                return Container(
+                  child: Center(
+                    child: CircularProgressIndicator(),
+                  ),
+                );
+              }
+            }),
+      ]),
     );
   }
 }
-Widget subTile(String title, String interval, String prod, String price,
-    String unit, String image, BuildContext context, String subID ,String vendorID ,String date , double height,double width) {
+
+Widget subTile(
+    String title,
+    String interval,
+    String prod,
+    String price,
+    String unit,
+    String image,
+    BuildContext context,
+    String subID,
+    String vendorID,
+    String date,
+    double height,
+    double width) {
   return Card(
     elevation: 5.0,
     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
@@ -114,13 +131,13 @@ Widget subTile(String title, String interval, String prod, String price,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Padding(
-              padding: const EdgeInsets.only(left:8.0,top: 8.0),
+              padding: const EdgeInsets.only(left: 8.0, top: 8.0),
               child: ClipRRect(
                 borderRadius: BorderRadius.all(Radius.circular(25)),
                 child: Image.asset(
                   image,
-                  height: height*0.143,
-                  width: height*0.143,
+                  height: height * 0.143,
+                  width: height * 0.143,
                 ),
               ),
             ),
@@ -174,7 +191,9 @@ Widget subTile(String title, String interval, String prod, String price,
                         )
                       ],
                     ),
-                    SizedBox(width: width*0.06,),
+                    SizedBox(
+                      width: width * 0.06,
+                    ),
                     Column(
                       children: [
                         Text(
@@ -187,7 +206,7 @@ Widget subTile(String title, String interval, String prod, String price,
                         Center(
                           child: Text(unit),
                         ),
-                        SizedBox(height: height*0.04)
+                        SizedBox(height: height * 0.04)
                       ],
                     )
                   ],
@@ -199,31 +218,31 @@ Widget subTile(String title, String interval, String prod, String price,
         Padding(
           padding: const EdgeInsets.all(10),
           child: Container(
-    width: double.infinity,
-    height: height*0.065,
-    child: TextButton(
-        onPressed: () {
-          Navigator.push(context, MaterialPageRoute(
-                                  builder: (context) => YourSubscriptionScreen(
-                                       ID: subID,
-                                       vendor_ID: vendorID,
-                                      ))
-          
-          );
-        },
-        style: ButtonStyle(
-            backgroundColor:
-                MaterialStateProperty.all(AppColors.tileSelectGreen),
-            shape: MaterialStateProperty.all(
-              RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10.0),
-              ),
-            )),
-        child: Text(
-          "Tap to view more",
-          style: TextStyle(color: Colors.white, fontSize: 18),
-        )),
-  ),
+            width: double.infinity,
+            height: height * 0.065,
+            child: TextButton(
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => YourSubscriptionScreen(
+                                ID: subID,
+                                vendor_ID: vendorID,
+                              )));
+                },
+                style: ButtonStyle(
+                    backgroundColor:
+                        MaterialStateProperty.all(AppColors.tileSelectGreen),
+                    shape: MaterialStateProperty.all(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                      ),
+                    )),
+                child: Text(
+                  "Tap to view more",
+                  style: TextStyle(color: Colors.white, fontSize: 18),
+                )),
+          ),
         )
       ],
     ),

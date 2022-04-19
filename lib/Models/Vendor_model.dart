@@ -120,35 +120,35 @@ class Vendor {
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
-  
+
     return other is Vendor &&
-      other.id == id &&
-      other.userid == userid &&
-      other.productid == productid &&
-      other.vendor == vendor &&
-      other.quantity == quantity &&
-      other.interval == interval &&
-      other.amount == amount &&
-      other.createdAt == createdAt &&
-      other.updatedAt == updatedAt &&
-      other.v == v &&
-      other.status == status &&
-      listEquals(other.vendor_details, vendor_details);
+        other.id == id &&
+        other.userid == userid &&
+        other.productid == productid &&
+        other.vendor == vendor &&
+        other.quantity == quantity &&
+        other.interval == interval &&
+        other.amount == amount &&
+        other.createdAt == createdAt &&
+        other.updatedAt == updatedAt &&
+        other.v == v &&
+        other.status == status &&
+        listEquals(other.vendor_details, vendor_details);
   }
 
   @override
   int get hashCode {
     return id.hashCode ^
-      userid.hashCode ^
-      productid.hashCode ^
-      vendor.hashCode ^
-      quantity.hashCode ^
-      interval.hashCode ^
-      amount.hashCode ^
-      createdAt.hashCode ^
-      updatedAt.hashCode ^
-      v.hashCode ^
-      status.hashCode ^
-      vendor_details.hashCode;
+        userid.hashCode ^
+        productid.hashCode ^
+        vendor.hashCode ^
+        quantity.hashCode ^
+        interval.hashCode ^
+        amount.hashCode ^
+        createdAt.hashCode ^
+        updatedAt.hashCode ^
+        v.hashCode ^
+        status.hashCode ^
+        vendor_details.hashCode;
   }
 }

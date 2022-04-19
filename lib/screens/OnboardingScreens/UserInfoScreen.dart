@@ -1,18 +1,11 @@
-// ignore_for_file: file_names, prefer_const_literals_to_create_immutables, prefer_const_constructors
-
-import 'dart:io';
 import 'dart:math';
 
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:subs_vendor/Utils/Constants.dart';
-import 'package:subs_vendor/api/UpdateProfileApi.dart';
-import 'package:subs_vendor/screens/CustomerScreens/HomeScreen.dart';
-import 'package:subs_vendor/shared_preferences/token_profile.dart';
-import 'package:subs_vendor/shared_preferences/type_preference.dart';
-import 'package:subs_vendor/widgets/ScreenSizeButton.dart';
+import '../../Utils/Constants.dart';
+import '../../api/UpdateProfileApi.dart';
+import '../../shared_preferences/token_profile.dart';
+import '../../shared_preferences/type_preference.dart';
 
 import 'BankDetailsScreen.dart';
 
@@ -34,9 +27,9 @@ class _ProfilePageState extends State<ProfilePage> {
   final shopController = TextEditingController();
   final emailController = TextEditingController();
   final addressController = TextEditingController();
-  final pincodeController = TextEditingController();
+  final pinCodeController = TextEditingController();
   final descriptionController = TextEditingController();
-  bool _isLoading = false;
+  final _isLoading = ValueNotifier<bool>(false);
 
   @override
   void initState() {
@@ -54,24 +47,29 @@ class _ProfilePageState extends State<ProfilePage> {
 
   _onProceed() async {
     if (_form.currentState!.validate() == true) {
-      setState(() {
-        _isLoading = true;
-      });
-      var response = await UpdateProfile.updateProfile(tokenProfile!.token,
+      _isLoading.value = true;
+      final responseStatusCode = await UpdateProfile.updateProfile(
+          tokenProfile!.token,
           nameController.text,
           emailController.text,
           addressController.text,
-          pincodeController.text,
+          pinCodeController.text,
           type.toString(),
           shopController.text,
           descriptionController.text);
-      if (response == 200) {
+      if (responseStatusCode == 200) {
+        print(responseStatusCode);
         print("-Changed Details-");
-        print(response);
         Navigator.pushNamed(context, BankDetailScreen.routeName);
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          content: Text("Something went wrong"),
+          duration: Duration(seconds: 4),
+        ));
       }
+      _isLoading.value = false;
     } else {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
         content: Text("Please Enter Valid Details"),
         duration: Duration(seconds: 4),
       ));
@@ -79,13 +77,24 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   @override
+  void dispose() {
+    nameController.dispose();
+    shopController.dispose();
+    emailController.dispose();
+    addressController.dispose();
+    pinCodeController.dispose();
+    descriptionController.dispose();
+    _isLoading.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    double height, width;
-    height = MediaQuery.of(context).size.height;
-    width = MediaQuery.of(context).size.width;
-    double defaultFontSize = 14;
-    double ContainerSize = height * 0.221;
-    double picSize = height * 0.08;
+    final height = MediaQuery.of(context).size.height;
+    final width = MediaQuery.of(context).size.width;
+    const defaultFontSize = 14.0;
+    final containerSize = height * 0.221;
+    final picSize = height * 0.08;
     return Form(
       key: _form,
       child: Scaffold(
@@ -100,20 +109,20 @@ class _ProfilePageState extends State<ProfilePage> {
                   children: [
                     Container(
                       width: double.infinity,
-                      height: ContainerSize,
-                      decoration: BoxDecoration(
+                      height: containerSize,
+                      decoration: const BoxDecoration(
                         color: AppColors.primaryGrey,
                         borderRadius: BorderRadiusDirectional.only(
                             bottomEnd: Radius.circular(30),
                             bottomStart: Radius.circular(30)),
                       ),
                     ),
-                    Text(
+                    const Text(
                       "User Info",
                       style: TextStyle(fontSize: 18),
                     ),
                     Positioned(
-                        top: ContainerSize - picSize,
+                        top: containerSize - picSize,
                         child: Container(
                           child: ClipOval(
                             child: Image.asset(
@@ -133,22 +142,18 @@ class _ProfilePageState extends State<ProfilePage> {
                         )),
                   ],
                 ),
-                SizedBox(
-                  height: height * 0.071,
-                ),
+                SizedBox(height: height * 0.071),
                 ListView(
                     shrinkWrap: true,
-                    physics: NeverScrollableScrollPhysics(),
-                    padding: EdgeInsets.all(10),
+                    physics: const NeverScrollableScrollPhysics(),
+                    padding: const EdgeInsets.all(10),
                     children: [
-                      Align(
+                      const Align(
                           alignment: Alignment.centerLeft,
                           child: Text("Name",
                               style: TextStyle(color: AppColors.iconGrey))),
+                      SizedBox(height: height * 0.013),
                       SizedBox(
-                        height: height * 0.013,
-                      ),
-                      Container(
                         height: height * 0.065,
                         child: TextFormField(
                           showCursor: true,
@@ -159,28 +164,28 @@ class _ProfilePageState extends State<ProfilePage> {
                               borderRadius: BorderRadius.circular(15),
                             ),
                             enabledBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
+                                borderSide: const BorderSide(
                                     color: AppColors.tileSelectGreen),
                                 borderRadius: BorderRadius.circular(15)),
                             focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
+                                borderSide: const BorderSide(
                                     color: AppColors.tileSelectGreen),
                                 borderRadius: BorderRadius.circular(15)),
                             errorBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
+                                borderSide: const BorderSide(
                                     color: AppColors.tileSelectGreen),
                                 borderRadius: BorderRadius.circular(15)),
                             focusedErrorBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
+                                borderSide: const BorderSide(
                                     color: AppColors.tileSelectGreen),
                                 borderRadius: BorderRadius.circular(15)),
                             disabledBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
+                                borderSide: const BorderSide(
                                     color: AppColors.tileSelectGreen),
                                 borderRadius: BorderRadius.circular(15)),
                             filled: true,
                             fillColor: Colors.white,
-                            hintStyle: TextStyle(
+                            hintStyle: const TextStyle(
                                 color: AppColors.iconGrey,
                                 fontSize: defaultFontSize),
                             hintText: "Enter your Name",
@@ -189,17 +194,13 @@ class _ProfilePageState extends State<ProfilePage> {
                           controller: nameController,
                         ),
                       ),
-                      SizedBox(
-                        height: height * 0.013,
-                      ),
-                      Align(
+                      SizedBox(height: height * 0.013),
+                      const Align(
                           alignment: Alignment.centerLeft,
                           child: Text("Email-ID",
                               style: TextStyle(color: AppColors.iconGrey))),
+                      SizedBox(height: height * 0.013),
                       SizedBox(
-                        height: height * 0.013,
-                      ),
-                      Container(
                         height: height * 0.065,
                         child: TextFormField(
                           showCursor: true,
@@ -210,29 +211,29 @@ class _ProfilePageState extends State<ProfilePage> {
                               borderRadius: BorderRadius.circular(15),
                             ),
                             enabledBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
+                                borderSide: const BorderSide(
                                     color: AppColors.tileSelectGreen),
                                 borderRadius: BorderRadius.circular(15)),
                             focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
+                                borderSide: const BorderSide(
                                     color: AppColors.tileSelectGreen),
                                 borderRadius: BorderRadius.circular(15)),
                             errorStyle: const TextStyle(fontSize: 0.01),
                             errorBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
+                                borderSide: const BorderSide(
                                     color: AppColors.tileSelectGreen),
                                 borderRadius: BorderRadius.circular(15)),
                             focusedErrorBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
+                                borderSide: const BorderSide(
                                     color: AppColors.tileSelectGreen),
                                 borderRadius: BorderRadius.circular(15)),
                             disabledBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
+                                borderSide: const BorderSide(
                                     color: AppColors.tileSelectGreen),
                                 borderRadius: BorderRadius.circular(15)),
                             filled: true,
                             fillColor: Colors.white,
-                            hintStyle: TextStyle(
+                            hintStyle: const TextStyle(
                                 color: AppColors.iconGrey,
                                 fontSize: defaultFontSize),
                             hintText: "Enter your Email-ID",
@@ -254,15 +255,13 @@ class _ProfilePageState extends State<ProfilePage> {
                           },
                         ),
                       ),
-                      SizedBox(
-                        height: height * 0.013,
-                      ),
+                      SizedBox(height: height * 0.013),
                       type.data == true
                           ? ListView(
                               shrinkWrap: true,
-                              physics: NeverScrollableScrollPhysics(),
+                              physics: const NeverScrollableScrollPhysics(),
                               children: [
-                                  InsertText(
+                                  insertText(
                                       "Shop Name",
                                       "Enter your Shop Name",
                                       shopController,
@@ -270,31 +269,27 @@ class _ProfilePageState extends State<ProfilePage> {
                                   SizedBox(
                                     height: height * 0.013,
                                   ),
-                                  InsertText(
+                                  insertText(
                                       "Description",
                                       "Enter a small Description",
                                       descriptionController,
                                       height),
                                 ])
-                          : SizedBox(),
-                      SizedBox(
-                        height: height * 0.013,
-                      ),
-                      Align(
+                          : const SizedBox(),
+                      SizedBox(height: height * 0.013),
+                      const Align(
                           alignment: Alignment.centerLeft,
                           child: Text(
                             "Address",
                             style: TextStyle(color: AppColors.iconGrey),
                           )),
+                      SizedBox(height: height * 0.013),
                       SizedBox(
-                        height: height * 0.013,
-                      ),
-                      Container(
                         height: height * 0.1,
                         child: TextFormField(
                           showCursor: true,
                           inputFormatters: [
-                            new LengthLimitingTextInputFormatter(36),
+                            LengthLimitingTextInputFormatter(36),
 
                             /// here char limit is 5
                           ],
@@ -306,28 +301,28 @@ class _ProfilePageState extends State<ProfilePage> {
                               borderRadius: BorderRadius.circular(15),
                             ),
                             enabledBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
+                                borderSide: const BorderSide(
                                     color: AppColors.tileSelectGreen),
                                 borderRadius: BorderRadius.circular(15)),
                             focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
+                                borderSide: const BorderSide(
                                     color: AppColors.tileSelectGreen),
                                 borderRadius: BorderRadius.circular(15)),
                             errorBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
+                                borderSide: const BorderSide(
                                     color: AppColors.tileSelectGreen),
                                 borderRadius: BorderRadius.circular(15)),
                             focusedErrorBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
+                                borderSide: const BorderSide(
                                     color: AppColors.tileSelectGreen),
                                 borderRadius: BorderRadius.circular(15)),
                             disabledBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
+                                borderSide: const BorderSide(
                                     color: AppColors.tileSelectGreen),
                                 borderRadius: BorderRadius.circular(15)),
                             filled: true,
                             fillColor: Colors.white,
-                            hintStyle: TextStyle(
+                            hintStyle: const TextStyle(
                                 color: AppColors.iconGrey,
                                 fontSize: defaultFontSize),
                             hintText: "Enter your address",
@@ -336,19 +331,15 @@ class _ProfilePageState extends State<ProfilePage> {
                           textCapitalization: TextCapitalization.sentences,
                         ),
                       ),
-                      SizedBox(
-                        height: height * 0.013,
-                      ),
-                      Align(
+                      SizedBox(height: height * 0.013),
+                      const Align(
                           alignment: Alignment.centerLeft,
                           child: Text(
                             "Pincode",
                             style: TextStyle(color: AppColors.iconGrey),
                           )),
+                      SizedBox(height: height * 0.013),
                       SizedBox(
-                        height: height * 0.013,
-                      ),
-                      Container(
                         height: height * 0.065,
                         child: TextFormField(
                           showCursor: true,
@@ -359,53 +350,45 @@ class _ProfilePageState extends State<ProfilePage> {
                               borderRadius: BorderRadius.circular(15),
                             ),
                             enabledBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
+                                borderSide: const BorderSide(
                                     color: AppColors.tileSelectGreen),
                                 borderRadius: BorderRadius.circular(15)),
                             focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
+                                borderSide: const BorderSide(
                                     color: AppColors.tileSelectGreen),
                                 borderRadius: BorderRadius.circular(15)),
                             errorStyle: const TextStyle(fontSize: 0.01),
                             errorBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
+                                borderSide: const BorderSide(
                                     color: AppColors.tileSelectGreen),
                                 borderRadius: BorderRadius.circular(15)),
                             focusedErrorBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
+                                borderSide: const BorderSide(
                                     color: AppColors.tileSelectGreen),
                                 borderRadius: BorderRadius.circular(15)),
                             disabledBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
+                                borderSide: const BorderSide(
                                     color: AppColors.tileSelectGreen),
                                 borderRadius: BorderRadius.circular(15)),
                             filled: true,
                             fillColor: Colors.white,
-                            hintStyle: TextStyle(
+                            hintStyle: const TextStyle(
                                 color: AppColors.iconGrey,
                                 fontSize: defaultFontSize),
                             hintText: "Enter your pincode",
                           ),
-                          controller: pincodeController,
+                          controller: pinCodeController,
                           keyboardType: TextInputType.number,
-                          validator: (value) {
-                            if (value?.length != 6) {
-                              return 'Empty';
-                            }
-                            return null;
-                          },
+                          validator: (value) =>
+                              (value?.length != 6) ? 'Empty' : null,
                         ),
                       ),
+                      SizedBox(height: height * 0.065),
                       SizedBox(
-                        height: height * 0.065,
-                      ),
-                      Container(
                         width: double.infinity,
                         height: height * 0.065,
                         child: TextButton(
-                            onPressed: () async {
-                              await _onProceed();
-                            },
+                            onPressed: () async => await _onProceed(),
                             style: ButtonStyle(
                                 backgroundColor: MaterialStateProperty.all(
                                     AppColors.tileSelectGreen),
@@ -414,32 +397,36 @@ class _ProfilePageState extends State<ProfilePage> {
                                     borderRadius: BorderRadius.circular(10.0),
                                   ),
                                 )),
-                            child: _isLoading
-                                ? Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      SizedBox(
-                                        height: height * 0.04,
-                                        width: width * 0.075,
-                                        child: CircularProgressIndicator(
-                                          color: Colors.white,
+                            child: ValueListenableBuilder<bool>(
+                              valueListenable: _isLoading,
+                              builder: (context, value, child) => value
+                                  ? Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        SizedBox(
+                                          height: height * 0.04,
+                                          width: width * 0.075,
+                                          child:
+                                              const CircularProgressIndicator(
+                                            color: Colors.white,
+                                          ),
                                         ),
-                                      ),
-                                      SizedBox(
-                                        width: width * 0.05,
-                                      ),
-                                      Text(
-                                        "Please Wait...",
-                                        style: TextStyle(
-                                            color: Colors.white, fontSize: 18),
-                                      )
-                                    ],
-                                  )
-                                : Text(
-                                    'Proceed',
-                                    style: TextStyle(
-                                        color: Colors.white, fontSize: 18),
-                                  )),
+                                        SizedBox(width: width * 0.05),
+                                        const Text(
+                                          "Please Wait...",
+                                          style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 18),
+                                        )
+                                      ],
+                                    )
+                                  : const Text(
+                                      'Proceed',
+                                      style: TextStyle(
+                                          color: Colors.white, fontSize: 18),
+                                    ),
+                            )),
                       )
                     ])
               ]);
@@ -449,102 +436,58 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 }
 
-Widget InsertText(String title, String hint, TextEditingController controller,
-    double height) {
-  return ListView(
-    shrinkWrap: true,
-    physics: NeverScrollableScrollPhysics(),
-    children: [
-      Align(
-          alignment: Alignment.centerLeft,
-          child: Text(
-            title,
-            style: TextStyle(color: AppColors.iconGrey),
-          )),
-      SizedBox(
-        height: height * 0.013,
-      ),
-      Container(
-        height: height * 0.065,
-        child: TextFormField(
-          showCursor: true,
-          decoration: InputDecoration(
-            border: OutlineInputBorder(
-              borderSide: const BorderSide(
-                  color: AppColors.tileSelectGreen, width: 0.5),
-              borderRadius: BorderRadius.circular(15),
-            ),
-            enabledBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: AppColors.tileSelectGreen),
-                borderRadius: BorderRadius.circular(15)),
-            focusedBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: AppColors.tileSelectGreen),
-                borderRadius: BorderRadius.circular(15)),
-            errorBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: AppColors.tileSelectGreen),
-                borderRadius: BorderRadius.circular(15)),
-            focusedErrorBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: AppColors.tileSelectGreen),
-                borderRadius: BorderRadius.circular(15)),
-            disabledBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: AppColors.tileSelectGreen),
-                borderRadius: BorderRadius.circular(15)),
-            filled: true,
-            fillColor: Colors.white,
-            hintStyle: TextStyle(color: AppColors.iconGrey, fontSize: 14),
-            hintText: hint,
-          ),
-          controller: controller,
-          textCapitalization: TextCapitalization.sentences,
-        ),
-      ),
-    ],
-  );
-}
-/*  Future pickImage(ImageSource source) async {
-    try {
-      final image = await ImagePicker().pickImage(source: source);
-      if (image == null) return;
-      final imageTemp = File(image.path);
-      setState(() {
-        this.image = imageTemp;
-      });
-    } on Exception catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text('Failed to pick image $e'),
-        duration: Duration(seconds: 4),
-      ));
-    }
-  }
-
-  void showPicker(context) {
-    showModalBottomSheet(
-        context: context,
-        builder: (BuildContext bc) {
-          return SafeArea(
-            child: Container(
-              child: Wrap(
-                children: <Widget>[
-                  ListTile(
-                    leading: Icon(Icons.photo_library),
-                    title: Text('Photo Library'),
-                    onTap: () {
-                      pickImage(ImageSource.gallery);
-                      Navigator.of(context).pop();
-                    },
-                  ),
-                  ListTile(
-                    leading: Icon(Icons.photo_camera),
-                    title: Text('Camera'),
-                    onTap: () {
-                      pickImage(ImageSource.camera);
-                      Navigator.of(context).pop();
-                    },
-                  ),
-                ],
+Widget insertText(String title, String hint, TextEditingController controller,
+        double height) =>
+    ListView(
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
+      children: [
+        Align(
+            alignment: Alignment.centerLeft,
+            child: Text(
+              title,
+              style: const TextStyle(color: AppColors.iconGrey),
+            )),
+        SizedBox(height: height * 0.013),
+        SizedBox(
+          height: height * 0.065,
+          child: TextFormField(
+            showCursor: true,
+            decoration: InputDecoration(
+              border: OutlineInputBorder(
+                borderSide: const BorderSide(
+                    color: AppColors.tileSelectGreen, width: 0.5),
+                borderRadius: BorderRadius.circular(15),
               ),
+              enabledBorder: OutlineInputBorder(
+                  borderSide:
+                      const BorderSide(color: AppColors.tileSelectGreen),
+                  borderRadius: BorderRadius.circular(15)),
+              focusedBorder: OutlineInputBorder(
+                  borderSide:
+                      const BorderSide(color: AppColors.tileSelectGreen),
+                  borderRadius: BorderRadius.circular(15)),
+              errorBorder: OutlineInputBorder(
+                  borderSide:
+                      const BorderSide(color: AppColors.tileSelectGreen),
+                  borderRadius: BorderRadius.circular(15)),
+              focusedErrorBorder: OutlineInputBorder(
+                  borderSide:
+                      const BorderSide(color: AppColors.tileSelectGreen),
+                  borderRadius: BorderRadius.circular(15)),
+              disabledBorder: OutlineInputBorder(
+                  borderSide:
+                      const BorderSide(color: AppColors.tileSelectGreen),
+                  borderRadius: BorderRadius.circular(15)),
+              filled: true,
+              fillColor: Colors.white,
+              hintStyle:
+                  const TextStyle(color: AppColors.iconGrey, fontSize: 14),
+              hintText: hint,
             ),
-          );
-        });
-  }
-*/
+            controller: controller,
+            textCapitalization: TextCapitalization.sentences,
+          ),
+        ),
+      ],
+    );

@@ -56,5 +56,5 @@ List<String> ImagesRect = [
 ];
 var ConstantType;
 
-var screenNumber=0 ;
+var screenNumber = 0;
 var currentIndex = 1;

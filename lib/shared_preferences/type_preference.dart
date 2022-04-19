@@ -5,12 +5,12 @@ TypePreference? typePreference;
 class TypePreference {
   static const _Type_STATUS = 'TypeSTATUS';
 
-  setTypeStatus(bool status) async {
+  Future<void> setTypeStatus(bool status) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setBool(_Type_STATUS, status);
   }
 
-  clearTypeStatus() async {
+  Future<void> clearTypeStatus() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.clear();
   }

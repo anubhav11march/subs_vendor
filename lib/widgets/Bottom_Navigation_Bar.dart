@@ -79,15 +79,17 @@ class _BottomNavBarState extends State<BottomNavBar> {
         //         SizedBox(width: displayWidth * .115)
         //       ])),
         // )
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
+        child: Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
           InkWell(
             onTap: () {
               setState(() {
                 currentIndex = 1;
                 HapticFeedback.lightImpact();
-                Navigator.pushNamed(context, ConstantType?MyCustomerScreen.routeName:HomeScreen.routeName);
+                Navigator.pushNamed(
+                    context,
+                    ConstantType
+                        ? MyCustomerScreen.routeName
+                        : HomeScreen.routeName);
               });
             },
             splashColor: Colors.white,
@@ -96,7 +98,9 @@ class _BottomNavBarState extends State<BottomNavBar> {
               children: [
                 SizedBox(width: displayWidth * .04),
                 ImageIcon(
-                  AssetImage(ConstantType?'lib/assets/images/contacts.png':'lib/assets/images/fruitsbasket.png'),
+                  AssetImage(ConstantType
+                      ? 'lib/assets/images/contacts.png'
+                      : 'lib/assets/images/fruitsbasket.png'),
                   size: displayWidth * .06,
                   color: currentIndex == 1
                       ? Colors.white
@@ -110,7 +114,11 @@ class _BottomNavBarState extends State<BottomNavBar> {
               setState(() {
                 currentIndex = 2;
                 HapticFeedback.lightImpact();
-                Navigator.pushNamed(context,ConstantType?OverviewScreen.routeName:MySubScreen.routeName);
+                Navigator.pushNamed(
+                    context,
+                    ConstantType
+                        ? OverviewScreen.routeName
+                        : MySubScreen.routeName);
               });
             },
             splashColor: Colors.white,
@@ -120,7 +128,9 @@ class _BottomNavBarState extends State<BottomNavBar> {
                 SizedBox(width: displayWidth * .04),
                 ImageIcon(
                   AssetImage(
-                    ConstantType?'lib/assets/images/tasks.png':'lib/assets/images/calendar.png',
+                    ConstantType
+                        ? 'lib/assets/images/tasks.png'
+                        : 'lib/assets/images/calendar.png',
                   ),
                   size: displayWidth * .07,
                   color: currentIndex == 2

@@ -7,7 +7,7 @@ import 'package:subs_vendor/screens/CommonScreens.dart/NotificationsScreen.dart'
 import 'package:subs_vendor/widgets/Bottom_Navigation_Bar.dart';
 
 class AlertsScreen extends StatefulWidget {
-  const AlertsScreen({ Key? key }) : super(key: key);
+  const AlertsScreen({Key? key}) : super(key: key);
   static String routeName = "/alerts";
 
   @override
@@ -15,9 +15,7 @@ class AlertsScreen extends StatefulWidget {
 }
 
 class _AlertsScreenState extends State<AlertsScreen> {
-  final _bottomNavigationBarItems = [
-    
-  ];
+  final _bottomNavigationBarItems = [];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,9 +27,7 @@ class _AlertsScreenState extends State<AlertsScreen> {
         centerTitle: true,
       ),
       body: PageView(
-        children: [
-          NotificationScreen()
-        ],
+        children: [NotificationScreen()],
       ),
     );
   }

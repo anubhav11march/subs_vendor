@@ -34,34 +34,38 @@ class _NotificationScreenState extends State<NotificationScreen> {
   @override
   Widget build(BuildContext context) {
     double height, width;
-height = MediaQuery.of(context).size.height;
-width = MediaQuery.of(context).size.width;
+    height = MediaQuery.of(context).size.height;
+    width = MediaQuery.of(context).size.width;
     return Column(
       children: [
-        SizedBox(height: height*0.032,),
+        SizedBox(
+          height: height * 0.032,
+        ),
         Expanded(
           child: ListView.separated(
               separatorBuilder: (BuildContext context, int index) {
-                return SizedBox(height: height*0.009,);
-                },
+                return SizedBox(
+                  height: height * 0.009,
+                );
+              },
               padding: EdgeInsets.all(10),
               itemCount: listOfTitle.length,
-              itemBuilder: (context, index) =>
-                  NotificationCard(listOfTitle[index], listOfTime[index], width, height)),
+              itemBuilder: (context, index) => NotificationCard(
+                  listOfTitle[index], listOfTime[index], width, height)),
         ),
       ],
     );
   }
 }
 
-Widget NotificationCard(String text, String time ,double width, double height) {
+Widget NotificationCard(String text, String time, double width, double height) {
   return Card(
     color: AppColors.primaryGrey,
     elevation: 2,
     child: Row(
       children: [
         Container(
-          height: height*0.052,
+          height: height * 0.052,
           margin: EdgeInsets.all(10),
           child: AutoSizeText(
             text,
@@ -70,13 +74,13 @@ Widget NotificationCard(String text, String time ,double width, double height) {
           ),
         ),
         SizedBox(
-          width: width*0.0625,
+          width: width * 0.0625,
         ),
         Column(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
             SizedBox(
-              height: height*0.04,
+              height: height * 0.04,
             ),
             Text(
               time,

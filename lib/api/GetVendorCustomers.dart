@@ -8,8 +8,7 @@ import 'package:subs_vendor/Models/UserSubscriptionModel.dart';
 //var tokens = tokenProfile?.token;
 Future getVendorCustomers(token) async {
   http.Response res = await http.get(
-    Uri.parse(
-        'https://nameless-woodland-16457.herokuapp.com/vendor/customers'),
+    Uri.parse('https://subs-app1.herokuapp.com/vendor/customers'),
     headers: {
       'Authorization': "Bearer " + token
       // 'eyJhbGciOiJIUzI1NiJ9.IjYxYjVmZTllMDY2ZjNhOWJmYjc0ODFiMiI.1BrDUIYNTertbV74L05Zc-6UC6p0WqLkIXBA1Outxac'

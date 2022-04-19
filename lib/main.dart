@@ -1,35 +1,21 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get_navigation/src/root/get_material_app.dart';
-import 'package:subs_vendor/Utils/Constants.dart';
-import 'package:subs_vendor/api/SignUpapi.dart';
-import 'package:subs_vendor/screens/CustomerScreens/AddSubScreen.dart';
-import 'package:subs_vendor/screens/CommonScreens.dart/AlertsScreen.dart';
-import 'package:subs_vendor/screens/CustomerScreens/MySubscriptionsScreen.dart';
-import 'package:subs_vendor/screens/OnboardingScreens/BankDetailsScreen.dart';
-import 'package:subs_vendor/screens/BlankTargetScreen.dart';
-import 'package:subs_vendor/screens/OnboardingScreens/ChooseTypeScreen.dart';
-import 'package:subs_vendor/screens/CustomerScreens/CustomSubscription.dart';
-import 'package:subs_vendor/screens/CustomerScreens/HomeScreen.dart';
-import 'package:subs_vendor/screens/OnboardingScreens/ResetPasswordScreen.dart';
-import 'package:subs_vendor/screens/VendorScreens/MyCustomers.dart';
-import 'package:subs_vendor/screens/OnboardingScreens/SignUpOtpScreen.dart';
-import 'package:subs_vendor/screens/OnboardingScreens/LoginScreen.dart';
-import 'package:subs_vendor/screens/OnboardingScreens/SignUpScreen.dart';
-import 'package:subs_vendor/screens/OnboardingScreens/UserInfoScreen.dart';
-import 'package:subs_vendor/screens/VendorScreens/OverviewScreen.dart';
-import 'package:subs_vendor/screens/OnboardingScreens/WelcomeScreen.dart';
-import 'package:subs_vendor/screens/VendorScreens/VendorHomeScreen.dart';
-import 'package:subs_vendor/shared_preferences/login_preferences.dart';
-import 'package:subs_vendor/shared_preferences/token_preferences.dart';
-import 'package:subs_vendor/shared_preferences/token_profile.dart';
-import 'package:subs_vendor/shared_preferences/type_preference.dart';
+import 'package:flutter/services.dart';
+import 'Utils/Constants.dart';
+import 'screens/CustomerScreens/HomeScreen.dart';
+import 'screens/OnboardingScreens/WelcomeScreen.dart';
+import 'screens/VendorScreens/VendorHomeScreen.dart';
+import 'shared_preferences/login_preferences.dart';
+import 'shared_preferences/token_preferences.dart';
+import 'shared_preferences/token_profile.dart';
+import 'shared_preferences/type_preference.dart';
 
 import 'Utils/Routes.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setSystemUIOverlayStyle(
+      const SystemUiOverlayStyle(statusBarColor: Colors.transparent));
   await Firebase.initializeApp();
   runApp(const MyApp());
 }

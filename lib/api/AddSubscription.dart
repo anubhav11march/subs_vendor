@@ -27,16 +27,16 @@ class AddSubscriptionApi {
       "priceperquantity": price.toString(),
       "vendorphoneno": phoneno
     });
-    var response = await dio.post(
-        'https://nameless-woodland-16457.herokuapp.com/subscription/subscribe',
-        data: formData,
-        options: Options(
-            headers: {
-              "Authorization": "Bearer "+ token ,
-            },
-            validateStatus: (status) {
-              return status! < 500;
-            }));
+    var response =
+        await dio.post('https://subs-app1.herokuapp.com/subscription/subscribe',
+            data: formData,
+            options: Options(
+                headers: {
+                  "Authorization": "Bearer " + token,
+                },
+                validateStatus: (status) {
+                  return status! < 500;
+                }));
     print(response.data);
     if (response.statusCode == 200) {
       print(response.data);

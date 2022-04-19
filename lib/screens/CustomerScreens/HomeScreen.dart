@@ -31,15 +31,14 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  
   @override
   void initState() {
     super.initState();
   }
 
   int _currentIndex = 0;
- 
-final _inactiveColor = Colors.white;
+
+  final _inactiveColor = Colors.white;
   Widget _buildBottomBar() {
     return ClipRRect(
       borderRadius: BorderRadius.all(Radius.circular(15)),
@@ -53,28 +52,25 @@ final _inactiveColor = Colors.white;
         onItemSelected: (index) => setState(() => _currentIndex = index),
         items: <BottomNavyBarItem>[
           BottomNavyBarItem(
-            icon: ImageIcon(
-                    AssetImage('lib/assets/images/fruitsbasket.png')),
+            icon: ImageIcon(AssetImage('lib/assets/images/fruitsbasket.png')),
             title: Text(''),
             activeColor: Color.fromRGBO(255, 255, 255, 0.6),
             inactiveColor: _inactiveColor,
             textAlign: TextAlign.center,
           ),
           BottomNavyBarItem(
-            icon: ImageIcon(
-                    AssetImage(
-                      'lib/assets/images/calendar.png',
-                    )),
+            icon: ImageIcon(AssetImage(
+              'lib/assets/images/calendar.png',
+            )),
             title: Text(''),
             activeColor: Color.fromRGBO(255, 255, 255, 0.6),
             inactiveColor: _inactiveColor,
             textAlign: TextAlign.center,
           ),
           BottomNavyBarItem(
-            icon: ImageIcon(
-                    AssetImage(
-                      'lib/assets/images/icon4.png',
-                    )),
+            icon: ImageIcon(AssetImage(
+              'lib/assets/images/icon4.png',
+            )),
             title: Text(''),
             activeColor: Color.fromRGBO(255, 255, 255, 0.6),
             inactiveColor: _inactiveColor,
@@ -91,14 +87,8 @@ final _inactiveColor = Colors.white;
         alignment: Alignment.center,
         child: FindVendorScreen(),
       ),
-      Container(
-        alignment: Alignment.center,
-        child:MySubScreen()
-        ),
-      Container(
-        alignment: Alignment.center,
-        child: SettingsScreen()
-      ),
+      Container(alignment: Alignment.center, child: MySubScreen()),
+      Container(alignment: Alignment.center, child: SettingsScreen()),
     ];
     return IndexedStack(
       index: _currentIndex,
@@ -134,10 +124,8 @@ final _inactiveColor = Colors.white;
         ],
       ),
       body: getBody(),
-      
-    //   body:
+
+      //   body:
     );
   }
 }
-
-

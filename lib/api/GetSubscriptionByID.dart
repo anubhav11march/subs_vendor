@@ -7,7 +7,7 @@ import 'package:subs_vendor/Models/UserSubscriptionModel.dart';
 Future getSubsByID(token, var subID) async {
   http.Response res = await http.get(
     Uri.parse(
-        'https://nameless-woodland-16457.herokuapp.com/subscription/getsubscription?subid=$subID'),
+        'https://subs-app1.herokuapp.com/subscription/getsubscription?subid=$subID'),
     headers: {
       'Authorization': "Bearer " + token
       // 'eyJhbGciOiJIUzI1NiJ9.IjYxYjVmZTllMDY2ZjNhOWJmYjc0ODFiMiI.1BrDUIYNTertbV74L05Zc-6UC6p0WqLkIXBA1Outxac'

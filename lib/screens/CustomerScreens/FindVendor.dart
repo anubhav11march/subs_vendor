@@ -143,7 +143,7 @@ class _FindVendorScreenState extends State<FindVendorScreen> {
                             context,
                             height)
                         : SizedBox(
-                          height: height*0.5,
+                            height: height * 0.5,
                             child: Center(child: Text("Vendor Not Found"))),
 
         // FutureBuilder(

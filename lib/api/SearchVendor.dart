@@ -9,7 +9,7 @@ import 'package:subs_vendor/Models/UserSubscriptionModel.dart';
 Future getSearch(token, var phoneNo) async {
   http.Response res = await http.get(
     Uri.parse(
-        'https://nameless-woodland-16457.herokuapp.com/user/searchvendor?phoneno=$phoneNo'),
+        'https://subs-app1.herokuapp.com/user/searchvendor?phoneno=$phoneNo'),
     headers: {'Authorization': "Bearer " + token},
   );
   // http.MultipartFile.fromPath(, filePath)

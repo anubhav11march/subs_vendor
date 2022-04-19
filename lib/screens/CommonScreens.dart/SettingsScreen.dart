@@ -27,61 +27,64 @@ class _SettingsScreenState extends State<SettingsScreen> {
   @override
   Widget build(BuildContext context) {
     double height, width;
-height = MediaQuery.of(context).size.height;
-width = MediaQuery.of(context).size.width;
+    height = MediaQuery.of(context).size.height;
+    width = MediaQuery.of(context).size.width;
     return Scaffold(
         backgroundColor: Colors.white,
-        floatingActionButtonLocation:
-            FloatingActionButtonLocation.centerFloat,
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
         floatingActionButton: Padding(
-          padding: EdgeInsets.all(height*0.02),
+          padding: EdgeInsets.all(height * 0.02),
           child: Container(
-    width: width,
-    height: height*0.065,
-    child: TextButton(
-        onPressed: () {
-          loginPreference!.setLoginStatus(false);
-              tokenPreference.cleartTokenPreferenceData();
-              typePreference!.clearTypeStatus();
-              FirebaseAuth.instance.signOut();
-          Navigator.pushNamed(context, LoginScreen.routeName);
-        },
-        style: ButtonStyle(
-            backgroundColor:
-                MaterialStateProperty.all(AppColors.tileSelectGreen),
-            shape: MaterialStateProperty.all(
-              RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10.0),
-              ),
-            )),
-        child: Text(
-          "Logout",
-          style: TextStyle(color: Colors.white, fontSize: 18),
-        )),
-  ),
+            width: width,
+            height: height * 0.065,
+            child: TextButton(
+                onPressed: () {
+                  loginPreference!.setLoginStatus(false);
+                  tokenPreference.cleartTokenPreferenceData();
+                  typePreference!.clearTypeStatus();
+                  FirebaseAuth.instance.signOut();
+                  Navigator.pushNamedAndRemoveUntil(
+                    context,
+                    LoginScreen.routeName,
+                    (Route<dynamic> route) => false,
+                  );
+                },
+                style: ButtonStyle(
+                    backgroundColor:
+                        MaterialStateProperty.all(AppColors.tileSelectGreen),
+                    shape: MaterialStateProperty.all(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                      ),
+                    )),
+                child: Text(
+                  "Logout",
+                  style: TextStyle(color: Colors.white, fontSize: 18),
+                )),
+          ),
         ),
         body: ListView(
           physics: NeverScrollableScrollPhysics(),
           padding: EdgeInsets.all(10),
           children: [
             SizedBox(
-              height: height*0.032,
+              height: height * 0.032,
             ),
             settingCard("Profile", context, DisplayProfile.routeName),
             SizedBox(
-              height: height*0.013,
+              height: height * 0.013,
             ),
             settingCard("Payment History", context, blank.routeName),
             SizedBox(
-              height: height*0.013,
+              height: height * 0.013,
             ),
             settingCard("Help Center", context, blank.routeName),
             SizedBox(
-              height: height*0.013,
+              height: height * 0.013,
             ),
             settingCard("About", context, blank.routeName),
             SizedBox(
-              height: height*0.013,
+              height: height * 0.013,
             ),
             settingCard("Report a bug", context, ReportBugScreen.routeName),
           ],

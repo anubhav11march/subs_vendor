@@ -77,7 +77,7 @@ Widget productTile(String title, String number, String prod, String price,
               ],
             ),
             Padding(
-              padding: const EdgeInsets.only(left:55),
+              padding: const EdgeInsets.only(left: 55),
               child: RichText(
                 textAlign: TextAlign.center,
                 text: TextSpan(

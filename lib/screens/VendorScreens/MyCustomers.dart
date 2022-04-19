@@ -71,14 +71,16 @@ class _MyCustomerScreenState extends State<MyCustomerScreen> {
               future: fetchCustomers(),
               builder: (context, AsyncSnapshot list) {
                 if (list.data != null) {
-                  return list.data.length ==0 ?Text("No customers"):ListView.builder(
-                      shrinkWrap: true,
-                      physics: BouncingScrollPhysics(),
-                      itemCount: list.data.length,
-                      itemBuilder: (context, index) {
-                        print("In listview");
-                        print(list.data);
-                        return customerTile(
+                  return list.data.length == 0
+                      ? Text("No customers")
+                      : ListView.builder(
+                          shrinkWrap: true,
+                          physics: BouncingScrollPhysics(),
+                          itemCount: list.data.length,
+                          itemBuilder: (context, index) {
+                            print("In listview");
+                            print(list.data);
+                            return customerTile(
                                 list.data[index]['customer_details'][0]['name'],
                                 list.data[index]['interval'].toString(),
                                 "Milk",
@@ -91,7 +93,7 @@ class _MyCustomerScreenState extends State<MyCustomerScreen> {
                                     .toString(),
                                 height,
                                 width);
-                      });
+                          });
                 } else {
                   return Container(
                     child: Center(

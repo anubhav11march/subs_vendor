@@ -57,7 +57,7 @@ class _YourSubscriptionScreenState extends State<YourSubscriptionScreen> {
       print('-----');
       print(order_id);
       setState(() {
-       openCheckout(amount);
+        openCheckout(amount);
       });
     } else {
       setState(() {
@@ -215,7 +215,7 @@ class _YourSubscriptionScreenState extends State<YourSubscriptionScreen> {
                         padding: const EdgeInsets.all(8.0),
                         child: Center(
                           child: Text(
-                            list.data[0]['vendor_details']['name'],
+                            list.data[0]['vendor_details']?['name'] ?? "",
                             style: TextStyle(
                                 color: Colors.black,
                                 fontSize: 18,
@@ -237,8 +237,8 @@ class _YourSubscriptionScreenState extends State<YourSubscriptionScreen> {
                         padding: const EdgeInsets.all(8.0),
                         child: Center(
                           child: Text(
-                            list.data[0]['vendor_details']['phoneno']
-                                .toString(),
+                            list.data[0]['vendor_details']?['phoneno'] ??
+                                "".toString(),
                             style: TextStyle(
                                 color: Colors.black,
                                 fontSize: 18,
@@ -282,7 +282,7 @@ class _YourSubscriptionScreenState extends State<YourSubscriptionScreen> {
                         padding: const EdgeInsets.all(8.0),
                         child: Center(
                           child: Text(
-                            list.data[0]['productName'],
+                            list.data[0]['productName'] ?? "",
                             style: TextStyle(
                                 color: Colors.black,
                                 fontSize: 18,
@@ -304,7 +304,7 @@ class _YourSubscriptionScreenState extends State<YourSubscriptionScreen> {
                         padding: const EdgeInsets.all(8.0),
                         child: Center(
                           child: Text(
-                            "Rs.${list.data[0]['priceperquantity'].toString()}",
+                            "Rs.${(list.data[0]['priceperquantity'] ?? "").toString()}",
                             style: TextStyle(
                                 color: Colors.black,
                                 fontSize: 18,
@@ -432,58 +432,56 @@ class _YourSubscriptionScreenState extends State<YourSubscriptionScreen> {
                             builder: (context) {
                               return Dialog(
                                 elevation: 16,
-                                child: Container(
-                                  child: ListView(
-                                    shrinkWrap: true,
-                                    children: <Widget>[
-                                      TextButton(
-                                          onPressed: () async {
-                                            var response =
-                                                await MarkUpdate.markGreen(
-                                                    tokenProfile!.token,
-                                                    widget.ID,
-                                                    selectedDay);
+                                child: ListView(
+                                  shrinkWrap: true,
+                                  children: <Widget>[
+                                    TextButton(
+                                        onPressed: () async {
+                                          var response =
+                                              await MarkUpdate.markGreen(
+                                                  tokenProfile!.token,
+                                                  widget.ID,
+                                                  selectedDay);
 
-                                            if (response.statusCode == 200) {
-                                              setState(() {
-                                                now.add(selectedDay);
-                                                print(not_delivered);
-                                              });
-                                              Navigator.pop(context);
-                                            } else {
-                                              ScaffoldMessenger.of(context)
-                                                  .showSnackBar(SnackBar(
-                                                content: Text("Unknown Error"),
-                                                duration: Duration(seconds: 4),
-                                              ));
-                                            }
-                                          },
-                                          child: Text("Mark Delivered")),
-                                      TextButton(
-                                          onPressed: () async {
-                                            var response =
-                                                await MarkUpdate.markRed(
-                                                    tokenProfile!.token,
-                                                    widget.ID,
-                                                    selectedDay);
+                                          if (response.statusCode == 200) {
+                                            setState(() {
+                                              now.add(selectedDay);
+                                              print(not_delivered);
+                                            });
+                                            Navigator.pop(context);
+                                          } else {
+                                            ScaffoldMessenger.of(context)
+                                                .showSnackBar(SnackBar(
+                                              content: Text("Unknown Error"),
+                                              duration: Duration(seconds: 4),
+                                            ));
+                                          }
+                                        },
+                                        child: Text("Mark Delivered")),
+                                    TextButton(
+                                        onPressed: () async {
+                                          var response =
+                                              await MarkUpdate.markRed(
+                                                  tokenProfile!.token,
+                                                  widget.ID,
+                                                  selectedDay);
 
-                                            if (response.statusCode == 200) {
-                                              setState(() {
-                                                not_delivered.add(selectedDay);
-                                                print(not_delivered);
-                                              });
-                                              Navigator.pop(context);
-                                            } else {
-                                              ScaffoldMessenger.of(context)
-                                                  .showSnackBar(SnackBar(
-                                                content: Text("Unknown Error"),
-                                                duration: Duration(seconds: 4),
-                                              ));
-                                            }
-                                          },
-                                          child: Text("Mark Not Delivered")),
-                                    ],
-                                  ),
+                                          if (response.statusCode == 200) {
+                                            setState(() {
+                                              not_delivered.add(selectedDay);
+                                              print(not_delivered);
+                                            });
+                                            Navigator.pop(context);
+                                          } else {
+                                            ScaffoldMessenger.of(context)
+                                                .showSnackBar(SnackBar(
+                                              content: Text("Unknown Error"),
+                                              duration: Duration(seconds: 4),
+                                            ));
+                                          }
+                                        },
+                                        child: Text("Mark Not Delivered")),
+                                  ],
                                 ),
                               );
                             },
@@ -523,10 +521,13 @@ class _YourSubscriptionScreenState extends State<YourSubscriptionScreen> {
                       firstDay: DateTime.utc(2010, 10, 16),
                       rangeStartDay: DateTime.parse(list.data[0]['createdAt']),
                       //DateTime.now().add(Duration(days: 1)),
-                      rangeEndDay: DateTime.parse(list.data[0]['duedate']),
+                      rangeEndDay:
+                          // DateTime.tryParse(list.data[0]['duedate']) ??
+                          DateTime.now(),
                       //DateTime.now().add(Duration(days: 3)),
                       lastDay: DateTime.utc(2030, 3, 14),
-                      focusedDay: DateTime.parse(list.data[0]['duedate']),
+                      // focusedDay: DateTime.parse(list.data[0]['duedate']),
+                      focusedDay: DateTime.now(),
                       calendarBuilders: CalendarBuilders(
                         selectedBuilder: (context, day, selectedDay) {
                           return Padding(

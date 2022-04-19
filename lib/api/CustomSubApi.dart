@@ -38,7 +38,7 @@ class AddCustomSubscriptionApi {
       "vendorname": name
     });
     var response = await dio.post(
-        'https://nameless-woodland-16457.herokuapp.com/subscription/addcustomsubscription',
+        'https://subs-app1.herokuapp.com/subscription/addcustomsubscription',
         data: formData,
         options: Options(
             headers: {

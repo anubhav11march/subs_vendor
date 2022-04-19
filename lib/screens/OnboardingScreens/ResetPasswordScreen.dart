@@ -63,7 +63,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
     height = MediaQuery.of(context).size.height;
     width = MediaQuery.of(context).size.width;
     return Form(
-      key: _form,
+        key: _form,
         child: Scaffold(
             backgroundColor: Colors.white,
             body: ListView(padding: EdgeInsets.all(20), children: <Widget>[

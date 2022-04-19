@@ -6,7 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class UpdateBankDetails {
-  static Future updateBank(token ,var holdername, var accno, var ifsc, var upi) async {
+  static Future updateBank(
+      token, var holdername, var accno, var ifsc, var upi) async {
     var dio = Dio();
     FormData formData = FormData.fromMap({
       'accountno': accno,
@@ -17,7 +18,7 @@ class UpdateBankDetails {
 
     SharedPreferences prefs = await SharedPreferences.getInstance();
     var response = await dio.post(
-        'https://nameless-woodland-16457.herokuapp.com/vendor/updatebankdetails',
+        'https://subs-app1.herokuapp.com/vendor/updatebankdetails',
         data: formData,
         options: Options(
             headers: {
