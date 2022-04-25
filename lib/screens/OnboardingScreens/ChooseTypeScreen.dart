@@ -4,9 +4,10 @@ import 'SignUpOtpScreen.dart';
 import '../../shared_preferences/type_preference.dart';
 
 import 'OTPcontrollerScreen.dart';
+import 'SignUpScreen.dart';
 
 class ChooseTypeScreen extends StatefulWidget {
-  static var routeName = '/choose';
+  static const String routeName = '/choose';
 
   const ChooseTypeScreen({Key? key}) : super(key: key);
 
@@ -69,11 +70,18 @@ class _ChooseTypeScreenState extends State<ChooseTypeScreen> {
                   onPressed: () async {
                     await typePreference?.setTypeStatus(true);
                     ConstantType = true;
+                    // TODO
+                    // Navigator.push(
+                    //     context,
+                    //     MaterialPageRoute(
+                    //         builder: (context) => const SignUpOtpScreen(
+                    //               type: OTPScreenType.signup,
+                    //             )));
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => const SignUpOtpScreen(
-                                  type: OTPScreenType.signup,
+                            builder: (context) => SignUpScreen(
+                                  phone: '+917250723796',
                                 )));
                   },
                   style: ButtonStyle(

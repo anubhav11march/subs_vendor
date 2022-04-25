@@ -44,6 +44,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   }
 
   Future<void> onSignUp() async {
+    print(type);
     if (_form.currentState!.validate() == true) {
       isLoading.value = true;
       final response = await SignUp.signUp(

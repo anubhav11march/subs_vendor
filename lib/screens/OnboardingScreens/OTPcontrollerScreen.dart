@@ -3,7 +3,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:pinput/pin_put/pin_put.dart';
-import 'package:subs_vendor/Utils/Constants.dart';
 import 'package:subs_vendor/screens/OnboardingScreens/SignUpScreen.dart';
 
 import 'ResetPasswordScreen.dart';

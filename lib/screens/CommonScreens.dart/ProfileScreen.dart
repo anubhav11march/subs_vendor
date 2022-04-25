@@ -48,18 +48,16 @@ class _DisplayProfileState extends State<DisplayProfile> {
     return isType;
   }
 
-  getProfile() async {
-    final mapOfSubs = await getUser(
-      tokenProfile?.token,
-    );
-    print('In profile list');
-    print(mapOfSubs);
+  Future getProfile() async {
+    final mapOfSubs = await getUser(tokenProfile?.token);
+    // print('In profile list');
+    // print(mapOfSubs);
     nameController.text = mapOfSubs['data']['name'] ?? "";
     emailController.text = mapOfSubs['data']['email'] ?? "";
     addressController.text = mapOfSubs['data']['address'] ?? "";
     pinCodeController.text = mapOfSubs['data']['pincode'] ?? "";
     if (ConstantType == true) {
-      shopController.text = mapOfSubs['data']['shopname'];
+      shopController.text = mapOfSubs['data']['shopname'] ?? "";
       descriptionController.text = mapOfSubs['data']['name'];
     } else {
       shopController.text = '';

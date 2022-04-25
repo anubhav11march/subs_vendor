@@ -6,7 +6,7 @@ TokenPreference tokenPreference = TokenPreference();
 class TokenPreference {
   static const _USER_DATA = 'USERDATA';
 
-  setTokenPreferenceData(var data) async {
+  Future setTokenPreferenceData(var data) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
     prefs.setString(_USER_DATA, data);

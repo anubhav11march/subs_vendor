@@ -6,18 +6,18 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class UpdateBankDetails {
-  static Future updateBank(
-      token, var holdername, var accno, var ifsc, var upi) async {
-    var dio = Dio();
+  static Future updateBank(String token, String holderName, String accNo,
+      String ifsc, String upi) async {
+    final dio = Dio();
     FormData formData = FormData.fromMap({
-      'accountno': accno,
-      'accountholdername': holdername,
+      'accountno': accNo,
+      'accountholdername': holderName,
       'ifsccode': ifsc,
       'upidetails': upi,
     });
 
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    var response = await dio.post(
+    final prefs = await SharedPreferences.getInstance();
+    final response = await dio.post(
         'https://subs-app1.herokuapp.com/vendor/updatebankdetails',
         data: formData,
         options: Options(
@@ -27,9 +27,10 @@ class UpdateBankDetails {
             validateStatus: (status) {
               return status! < 500;
             }));
-    print(response.data);
+    // print(response.data);
+    // print(response.statusCode);
     if (response.statusCode == 200) {
-      print(response.data);
+      // print(response.data);
       /*SharedPrefsService().setUserToken(response.data.toString());
       String token = SharedPrefsService().getUserToken().toString();
       print(' the user token is $token'); */

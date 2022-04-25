@@ -13,7 +13,7 @@ class MarkUpdate {
   static Future markRed(token, var ID, var date) async {
     print(ID);
     print(date);
-    var dio = Dio();
+    final dio = Dio();
     FormData formData = FormData.fromMap({
       'date': date,
       'sub_id': ID,

@@ -48,24 +48,29 @@ class _ProfilePageState extends State<ProfilePage> {
   _onProceed() async {
     if (_form.currentState!.validate() == true) {
       _isLoading.value = true;
-      final responseStatusCode = await UpdateProfile.updateProfile(
-          tokenProfile!.token,
-          nameController.text,
-          emailController.text,
-          addressController.text,
-          pinCodeController.text,
-          type.toString(),
-          shopController.text,
-          descriptionController.text);
-      if (responseStatusCode == 200) {
-        print(responseStatusCode);
-        print("-Changed Details-");
-        Navigator.pushNamed(context, BankDetailScreen.routeName);
-      } else {
-        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-          content: Text("Something went wrong"),
-          duration: Duration(seconds: 4),
-        ));
+      try {
+        final responseStatusCode = await UpdateProfile.updateProfile(
+            tokenProfile!.token,
+            nameController.text,
+            emailController.text,
+            addressController.text,
+            pinCodeController.text,
+            type.toString(),
+            shopController.text,
+            descriptionController.text);
+        if (responseStatusCode == 200) {
+          print(responseStatusCode);
+          print("-Changed Details-");
+          Navigator.pushNamed(context, BankDetailScreen.routeName);
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+            content: Text("Something went wrong"),
+            duration: Duration(seconds: 4),
+          ));
+        }
+        _isLoading.value = false;
+      } catch (e) {
+        _isLoading.value = false;
       }
       _isLoading.value = false;
     } else {
@@ -95,6 +100,7 @@ class _ProfilePageState extends State<ProfilePage> {
     const defaultFontSize = 14.0;
     final containerSize = height * 0.221;
     final picSize = height * 0.08;
+    // _isLoading.value = false;
     return Form(
       key: _form,
       child: Scaffold(

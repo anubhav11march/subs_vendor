@@ -4,8 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:subs_vendor/Utils/Constants.dart';
 import 'package:subs_vendor/api/UpdateBankDetailsApi.dart';
 import 'package:subs_vendor/shared_preferences/token_profile.dart';
-import 'package:subs_vendor/widgets/CommonTextField.dart';
-import 'package:subs_vendor/widgets/ScreenSizeButton.dart';
 
 import '../CustomerScreens/HomeScreen.dart';
 
@@ -21,14 +19,23 @@ class BankDetailScreen extends StatefulWidget {
 class _BankDetailScreenState extends State<BankDetailScreen> {
   final accountHolderNameController = TextEditingController();
   final accountNoController = TextEditingController();
-  final ifscCodeController = TextEditingController();
+  final ifScCodeController = TextEditingController();
   final upiController = TextEditingController();
+
+  @override
+  void dispose() {
+    accountHolderNameController.dispose();
+    accountNoController.dispose();
+    ifScCodeController.dispose();
+    upiController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
-    double defaultFontSize = 14;
-    double height, width;
-    height = MediaQuery.of(context).size.height;
-    width = MediaQuery.of(context).size.width;
+    const defaultFontSize = 14.0;
+    final height = MediaQuery.of(context).size.height;
+    final width = MediaQuery.of(context).size.width;
     return Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
@@ -180,7 +187,7 @@ class _BankDetailScreenState extends State<BankDetailScreen> {
                       color: AppColors.iconGrey, fontSize: defaultFontSize),
                   hintText: "Enter IFSC Code",
                 ),
-                controller: ifscCodeController,
+                controller: ifScCodeController,
               ),
             ),
             SizedBox(
@@ -239,16 +246,16 @@ class _BankDetailScreenState extends State<BankDetailScreen> {
             SizedBox(
               height: height * 0.234,
             ),
-            Container(
+            SizedBox(
               width: width,
               height: height * 0.065,
               child: TextButton(
                   onPressed: () async {
-                    var response = await UpdateBankDetails.updateBank(
+                    final response = await UpdateBankDetails.updateBank(
                         tokenProfile!.token,
                         accountNoController.text,
                         accountHolderNameController.text,
-                        ifscCodeController.text,
+                        ifScCodeController.text,
                         upiController.text);
                     if (response == 200) {
                       Navigator.pushNamed(context, HomeScreen.routeName);
